@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace xluhco.web
 {
@@ -29,21 +30,22 @@ namespace xluhco.web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddSerilog();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
 
             // regex test URL:
             // http://regexstorm.net/tester?p=%2f%28.*%29&i=seank.com%2fHeyThere&r=%2fapi%2fRedirect%2f%241
             var options = new RewriteOptions()
                 .AddRewrite(@"/(.*)", "/api/Redirect/$1", skipRemainingRules: true);
 
+            app.UseMvc();
             app.UseRewriter(options);
+
         }
     }
 }
