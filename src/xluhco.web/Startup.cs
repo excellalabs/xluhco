@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -35,6 +37,11 @@ namespace xluhco.web
             }
 
             app.UseMvc();
+
+            var options = new RewriteOptions()
+                .AddRewrite(@"^(\d+)", "/api/Redirect/$1", skipRemainingRules: true);
+
+                app.UseRewriter(options);
         }
     }
 }
