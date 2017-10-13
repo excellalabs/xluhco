@@ -11,9 +11,10 @@ namespace xluhco.web.Controllers
     [Route("api/Redirect")]
     public class RedirectController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string shortCode)
         {
-            return Ok("Hello there!");
+            return Ok($"Hello there! Redirecting for short code {shortCode}");
         }
     }
 }
