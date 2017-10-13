@@ -41,7 +41,7 @@ namespace xluhco.web
             // regex test URL:
             // http://regexstorm.net/tester?p=%2f%28.*%29&i=seank.com%2fHeyThere&r=%2fapi%2fRedirect%2f%241
             var rewriteOptions = new RewriteOptions()
-                .AddRewrite(@"/(.*)", "/api/Redirect/$1",  skipRemainingRules: true);
+                .AddRewrite(@"^go/(.*)", "api/Redirect/{R:1}",  skipRemainingRules: true);
             app.UseRewriter(rewriteOptions);
             app.UseMvc();
 
