@@ -12,7 +12,7 @@ namespace xluhco.web.Controllers
     [Route("api/Redirect/{shortCode}")]
     public class RedirectController : Controller
     {
-        private IShortLinkRepository _shortLinkRepo;
+        private readonly IShortLinkRepository _shortLinkRepo;
 
         public RedirectController(IShortLinkRepository shortLinkRepo)
         {
@@ -22,7 +22,13 @@ namespace xluhco.web.Controllers
         public IActionResult Index(string shortCode)
         {
             var redirectUrl = _shortLinkRepo.GetByShortCode(shortCode)?.URL;
-            return Ok($"Hello there! Redirecting to {redirectUrl}");
+
+            if (string.IsNullOrWhiteSpace(redirectUrl))
+            {
+                return NotFound($"Short link not found for short code {shortCode}");
+            }
+
+            return RedirectPermanent(redirectUrl);
         }
     }
 }
