@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace xluhco.web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Redirect")]
+    [Route("api/Redirect/{shortCode}")]
     public class RedirectController : Controller
     {
         [HttpGet]
