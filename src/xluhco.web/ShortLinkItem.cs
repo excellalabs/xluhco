@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using CsvHelper;
+using Microsoft.AspNetCore.Hosting;
 
 namespace xluhco.web
 {
@@ -18,8 +20,8 @@ namespace xluhco.web
 
         public ShortLinkItem(string shortLinkCode, string url)
         {
-            this.ShortLinkCode = shortLinkCode;
-            this.URL = url;
+            ShortLinkCode = shortLinkCode;
+            URL = url;
         }
     }
 
@@ -31,31 +33,51 @@ namespace xluhco.web
 
     public class CachedShortLinkFromCsvRepository : IShortLinkRepository
     {
-        private readonly List<ShortLinkItem> _shortLinks;
+        private List<ShortLinkItem> _shortLinks;
+        private readonly IHostingEnvironment _env;
 
-        public CachedShortLinkFromCsvRepository()
+        public CachedShortLinkFromCsvRepository(IHostingEnvironment env)
         {
-            _shortLinks = new List<ShortLinkItem>()
-            {
-                new ShortLinkItem("sk", "http://SeanKilleen.com"),
-                new ShortLinkItem("skpres", "http://SeanKilleen.com/Presentations"),
-                new ShortLinkItem("du", "http://TheJavaScriptPromise.com"),
-            };
+            _env = env;
+            _shortLinks = new List<ShortLinkItem>();
+
+            //_shortLinks = new List<ShortLinkItem>
+            //{
+            //    new ShortLinkItem("sk", "http://SeanKilleen.com"),
+            //    new ShortLinkItem("skpres", "http://SeanKilleen.com/Presentations"),
+            //    new ShortLinkItem("du", "http://TheJavaScriptPromise.com"),
+            //};
 
         }
 
         private void PopulateShortLinks()
         {
-            //TODO: Implement piece that reads from CSV
+            using (var fileStream = new FileStream(Path.Combine(_env.WebRootPath, "ShortLinks.csv"), FileMode.Open))
+            using (var reader = new StreamReader(fileStream))
+            {
+                var csv = new CsvReader(reader);
+                var records = csv.GetRecords<ShortLinkItem>();
+
+                _shortLinks = records.ToList();
+            }
         }
 
         public List<ShortLinkItem> GetShortLinks()
         {
-            return _shortLinks; //TODO: populate if empty
+            if (!_shortLinks.Any())
+            {
+                PopulateShortLinks();
+            }
+
+            return _shortLinks;
         }
 
         public ShortLinkItem GetByShortCode(string shortCode)
         {
+            if (!_shortLinks.Any())
+            {
+                PopulateShortLinks();
+            }
             return _shortLinks
                 .FirstOrDefault(x => x.ShortLinkCode.Equals(shortCode, StringComparison.InvariantCultureIgnoreCase));
         }
