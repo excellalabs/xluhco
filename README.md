@@ -13,3 +13,4 @@ A URL shortener for Excella that lives at http://xluh.co (Excellaco. Get it?)
 * We probably should add some Unit Tests
 * We probably should add some logging
 * We probably should add AppInsights for some easier analytics
+* We probably should make the app more configuration friendly (file paths, AppInsights info, etc.)
