@@ -9,8 +9,8 @@ namespace xluhco.web
 {
     public class ShortLinkItem : IShortLinkItem
     {
-        public string ShortLinkCode { get; private set; }
-        public string URL { get; private set; }
+        public string ShortLinkCode { get; }
+        public string URL { get; }
 
         public ShortLinkItem(string shortLinkCode, string url)
         {
