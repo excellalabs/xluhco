@@ -25,7 +25,7 @@ namespace xluhco.web.Controllers
 
             if (string.IsNullOrWhiteSpace(redirectUrl))
             {
-                return NotFound($"Short link not found for short code {shortCode}");
+                return NotFound($"Short link not found for short code '{shortCode}'");
             }
 
             return RedirectPermanent(redirectUrl);
