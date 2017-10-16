@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace xluhco.web
@@ -40,6 +34,7 @@ namespace xluhco.web
             }
 
             var rewriteOptions = new RewriteOptions()
+                // ReSharper disable once ArgumentsStyleLiteral -- kept for readability
                 .AddRewrite(@"^(.*)", "/api/Redirect/$1", skipRemainingRules: true);
             app.UseRewriter(rewriteOptions);
             app.UseMvc();
