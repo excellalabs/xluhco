@@ -40,14 +40,6 @@ namespace xluhco.web
         {
             _env = env;
             _shortLinks = new List<ShortLinkItem>();
-
-            //_shortLinks = new List<ShortLinkItem>
-            //{
-            //    new ShortLinkItem("sk", "http://SeanKilleen.com"),
-            //    new ShortLinkItem("skpres", "http://SeanKilleen.com/Presentations"),
-            //    new ShortLinkItem("du", "http://TheJavaScriptPromise.com"),
-            //};
-
         }
 
         private void PopulateShortLinks()
@@ -82,5 +74,4 @@ namespace xluhco.web
                 .FirstOrDefault(x => x.ShortLinkCode.Equals(shortCode, StringComparison.InvariantCultureIgnoreCase));
         }
     }
-
 }
