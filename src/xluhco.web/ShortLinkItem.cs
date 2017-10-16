@@ -7,12 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace xluhco.web
 {
-    public interface IShortLinkItem
-    {
-        string ShortLinkCode { get; }
-        string URL { get; }
-    }
-
     public class ShortLinkItem : IShortLinkItem
     {
         public string ShortLinkCode { get; private set; }
