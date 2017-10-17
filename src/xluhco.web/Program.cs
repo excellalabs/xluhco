@@ -10,9 +10,10 @@ namespace xluhco.web
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                //.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
+                .Enrich.WithProperty("ApplicationName", "xluhco")
                 .CreateLogger();
             BuildWebHost(args).Run();
         }
