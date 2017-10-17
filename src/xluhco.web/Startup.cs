@@ -22,12 +22,12 @@ namespace xluhco.web
         {
             services.AddMvc();
             services.AddSingleton<IShortLinkRepository, CachedShortLinkFromCsvRepository>();
+            services.AddSingleton(x => Log.Logger);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddSerilog();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -37,6 +37,7 @@ namespace xluhco.web
                 // ReSharper disable once ArgumentsStyleLiteral -- kept for readability
                 .AddRewrite(@"^(.*)", "/api/Redirect/$1", skipRemainingRules: true);
             app.UseRewriter(rewriteOptions);
+
             app.UseMvc();
         }
     }
