@@ -18,16 +18,18 @@ namespace xluhco.web.Controllers
         public IActionResult Index(string shortCode)
         {
             _logger.Debug("Entered the redirect for short code {shortCode}", shortCode);
-            var redirectUrl = _shortLinkRepo.GetByShortCode(shortCode)?.URL;
+            var redirectItem = _shortLinkRepo.GetByShortCode(shortCode);
 
-            if (string.IsNullOrWhiteSpace(redirectUrl))
+            if (string.IsNullOrWhiteSpace(redirectItem?.URL))
             {
                 _logger.Warning("No redirect found for requested short code {shortCode}", shortCode);
                 return NotFound($"Short link not found for short code '{shortCode}'");
             }
 
-            _logger.Information("Redirecteing {shortCode} to {redirectUrl}", shortCode, redirectUrl);
-            return RedirectPermanent(redirectUrl);
+            _logger.Information("Redirecteing {shortCode} to {redirectUrl}", shortCode, redirectItem);
+
+            return View("Index", redirectItem);
+            //return RedirectPermanent(redirectItem);
         }
     }
 }
