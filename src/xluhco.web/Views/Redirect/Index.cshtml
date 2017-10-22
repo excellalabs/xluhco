@@ -1,16 +1,16 @@
-﻿@using xluhco.web
-@model ShortLinkItem
+﻿@model xluhco.web.Controllers.RedirectViewModel
 @{
+    var millisecondsToWait = Model.NumberOfSecondsToWait * 1000;
 }
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>xluh.co -- Redirecting to @Model.URL</title>
+    <title>xluh.co -- Redirecting to @Model.Url</title>
 
     <meta name="description" content="xluhco is a URL shortener for Excella (xluh.co, Excella Co, get it?)">
     <meta name="author" content="Sean Killeen">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108259179-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@Model.TrackingCode"></script>
 </head>
 <body>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -20,7 +20,7 @@
         gtag('js', new Date());
 
         // Creates a timeout to call the redirect after four secs (if GA takes too long).
-        setTimeout(redirectToUrl, 4000);
+        setTimeout(redirectToUrl, @millisecondsToWait);
 
         // Keeps track of whether or not the redirect has been called.
         // This prevents the from being called twice in cases
@@ -30,14 +30,14 @@
         function redirectToUrl() {
             if (!alreadyRedirected) {
                 alreadyRedirected = true;
-                window.location.assign("@Model.URL");
+                window.location.assign("@Model.Url");
             }
         };
 
-        gtag('config', 'UA-108259179-1');
+        gtag('config', '@Model.TrackingCode');
         gtag('event', 'shortLinkView', {
             'shortLinkCode': '@Model.ShortLinkCode',
-            'shortLinkUrl': '@Model.URL',
+            'shortLinkUrl': '@Model.Url',
             'event_callback': function() {
                 redirectToUrl();
             }
@@ -45,6 +45,6 @@
     </script>
 
     <h2>Short Code @Model.ShortLinkCode</h2>
-    <p>Redirecting to @Model.URL</p>
+    <p>Redirecting to @Model.Url</p>
 </body>
 </html>

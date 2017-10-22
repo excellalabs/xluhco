@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace xluhco.web.Controllers
 {
@@ -6,11 +7,15 @@ namespace xluhco.web.Controllers
     {
         private readonly IShortLinkRepository _shortLinkRepo;
         private readonly Serilog.ILogger _logger;
+        private readonly RedirectOptions _redirectOptions;
+        private readonly GoogleAnalyticsOptions _gaOptions;
 
-        public RedirectController(IShortLinkRepository shortLinkRepo, Serilog.ILogger logger)
+        public RedirectController(IShortLinkRepository shortLinkRepo, Serilog.ILogger logger, IOptions<RedirectOptions> redirectOptions, IOptions<GoogleAnalyticsOptions> gaOptions)
         {
             _shortLinkRepo = shortLinkRepo;
             _logger = logger;
+            _redirectOptions = redirectOptions.Value;
+            _gaOptions = gaOptions.Value;
         }
 
         [HttpGet]
@@ -25,9 +30,10 @@ namespace xluhco.web.Controllers
                 return NotFound($"Short link not found for short code '{shortCode}'");
             }
 
-            _logger.Information("Redirecteing {shortCode} to {redirectUrl}", shortCode, redirectItem);
+            _logger.Information("Redirecteing {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", redirectItem.ShortLinkCode, redirectItem.URL, _gaOptions.TrackingPropertyId);
+            var viewModel = new RedirectViewModel(_gaOptions.TrackingPropertyId, _redirectOptions.SecondsToWaitForAnalytics, shortCode, redirectItem.URL);
 
-            return View("Index", redirectItem);
+            return View("Index", viewModel);
         }
     }
 }
