@@ -20,6 +20,10 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-108259179-1');
+        gtag('event', 'shortLinkView', {
+            'shortLinkCode': '@Model.ShortLinkCode',
+            'shortLinkUrl': '@Model.URL'
+        });
     </script>
 
     <h2>Short Code @Model.ShortLinkCode</h2>
