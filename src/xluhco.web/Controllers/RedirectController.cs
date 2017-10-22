@@ -27,7 +27,7 @@ namespace xluhco.web.Controllers
             if (string.IsNullOrWhiteSpace(redirectItem?.URL))
             {
                 _logger.Warning("No redirect found for requested short code {shortCode}", shortCode);
-                return NotFound($"Short link not found for short code '{shortCode}'");
+                return View("NotFound");
             }
 
             _logger.Information("Redirecteing {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", redirectItem.ShortLinkCode, redirectItem.URL, _gaOptions.TrackingPropertyId);
