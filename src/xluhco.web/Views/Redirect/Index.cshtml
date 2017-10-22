@@ -19,10 +19,24 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
+
+        // where the event callback function fires normally.
+        var alreadyRedirected = false;
+
+        function redirectToUrl() {
+            if (!alreadyRedirected) {
+                alreadyRedirected = true;
+                window.location.assign("@Model.URL");
+            }
+        };
+
         gtag('config', 'UA-108259179-1');
         gtag('event', 'shortLinkView', {
             'shortLinkCode': '@Model.ShortLinkCode',
-            'shortLinkUrl': '@Model.URL'
+            'shortLinkUrl': '@Model.URL',
+            'event_callback': function() {
+                redirectToUrl();
+            }
         });
     </script>
 
