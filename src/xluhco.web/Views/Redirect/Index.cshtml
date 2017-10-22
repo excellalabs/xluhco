@@ -19,7 +19,11 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
+        // Creates a timeout to call the redirect after two secs (if GA takes too long).
+        setTimeout(redirectToUrl, 2000);
 
+        // Keeps track of whether or not the redirect has been called.
+        // This prevents the from being called twice in cases
         // where the event callback function fires normally.
         var alreadyRedirected = false;
 
