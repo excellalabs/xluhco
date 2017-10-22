@@ -37,7 +37,7 @@ namespace xluhco.web
                     var records = csv.GetRecords<ShortLinkItem>();
 
                     _shortLinks = records.ToList();
-                    _logger.Information("Populared {numberOfShortLinks} short links", _shortLinks.Count);
+                    _logger.Information("Populated {numberOfShortLinks} short links", _shortLinks.Count);
                 }
             }
             catch (Exception ex)
