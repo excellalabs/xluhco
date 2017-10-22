@@ -37,6 +37,8 @@ namespace xluhco.web
             services.AddMvc();
             services.AddSingleton<IShortLinkRepository, CachedShortLinkFromCsvRepository>();
             services.AddSingleton(x => Log.Logger);
+            services.Configure<RedirectOptions>(Configuration);
+            services.Configure<GoogleAnalyticsOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
