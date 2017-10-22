@@ -3,6 +3,21 @@ using Microsoft.Extensions.Options;
 
 namespace xluhco.web.Controllers
 {
+    public class RedirectViewModel
+    {
+        public RedirectViewModel(string trackingCode, int numSecondsToWait, string shortLinkCode, string url)
+        {
+            TrackingCode = trackingCode;
+            NumberOfSecondsToWait = numSecondsToWait;
+            ShortLinkCode = shortLinkCode;
+            Url = url;
+        }
+
+        public string TrackingCode { get; }
+        public int NumberOfSecondsToWait { get; }
+        public string ShortLinkCode { get; }
+        public string Url { get; }
+    }
     public class RedirectController : Controller
     {
         private readonly IShortLinkRepository _shortLinkRepo;
@@ -30,9 +45,10 @@ namespace xluhco.web.Controllers
                 return NotFound($"Short link not found for short code '{shortCode}'");
             }
 
-            _logger.Information("Redirecteing {shortCode} to {redirectUrl}", shortCode, redirectItem);
+            _logger.Information("Redirecteing {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", redirectItem.ShortLinkCode, redirectItem.URL, _gaOptions.TrackingPropertyId);
+            var viewModel = new RedirectViewModel(_gaOptions.TrackingPropertyId, _redirectOptions.SecondsToWaitForAnalytics, shortCode, redirectItem.URL);
 
-            return View("Index", redirectItem);
+            return View("Index", viewModel);
         }
     }
 }
