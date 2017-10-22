@@ -1,8 +1,20 @@
 ﻿@using xluhco.web
-@model xluhco.web.ShortLinkItem
+@model ShortLinkItem
 @{
 }
 
-<h2>Short Code @Model.ShortLinkCode</h2>
-<p>Redirecting to @Model.URL</p>
+<!doctype html>
 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>TESTING</title>
+    
+    <meta name="description" content="xluhco is a URL shortener for Excella (xluh.co, Excella Co, get it?)">
+    <meta name="author" content="Sean Killeen">
+</head>
+<body>
+    <h2>Short Code @Model.ShortLinkCode</h2>
+    <p>Redirecting to @Model.URL</p>
+</body>
+</html>
