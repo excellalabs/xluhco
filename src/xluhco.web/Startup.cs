@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -33,12 +32,13 @@ namespace xluhco.web
                 app.UseDeveloperExceptionPage();
             }
 
-            var rewriteOptions = new RewriteOptions()
-                // ReSharper disable once ArgumentsStyleLiteral -- kept for readability
-                .AddRewrite(@"^(.*)", "/api/Redirect/$1", skipRemainingRules: true);
-            app.UseRewriter(rewriteOptions);
-
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "Default",
+                    template: "{shortCode?}",
+                    defaults: new {controller = "Redirect", action = "Index"});
+            });
         }
     }
 }
