@@ -42,6 +42,10 @@ namespace xluhco.web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Empty",
+                    template: "",
+                    defaults: new { controller = "Home", action = "Index" });
+                routes.MapRoute(
                     name: "Default",
                     template: "{shortCode?}",
                     defaults: new {controller = "Redirect", action = "Index"});
