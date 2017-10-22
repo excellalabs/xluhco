@@ -2,8 +2,6 @@
 
 namespace xluhco.web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Redirect/{shortCode}")]
     public class RedirectController : Controller
     {
         private readonly IShortLinkRepository _shortLinkRepo;
@@ -14,6 +12,7 @@ namespace xluhco.web.Controllers
             _shortLinkRepo = shortLinkRepo;
             _logger = logger;
         }
+
         [HttpGet]
         public IActionResult Index(string shortCode)
         {
@@ -29,7 +28,6 @@ namespace xluhco.web.Controllers
             _logger.Information("Redirecteing {shortCode} to {redirectUrl}", shortCode, redirectItem);
 
             return View("Index", redirectItem);
-            //return RedirectPermanent(redirectItem);
         }
     }
 }
