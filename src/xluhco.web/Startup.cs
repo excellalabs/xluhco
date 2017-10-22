@@ -7,16 +7,6 @@ using Serilog;
 
 namespace xluhco.web
 {
-    public class GoogleAnalyticsOptions
-    {
-        public string TrackingPropertyId { get; set; }
-    }
-
-    public class RedirectOptions
-    {
-        public int SecondsToWaitForAnalytics { get; set; }
-    }
-
     public class Startup
     {
         public Startup(IHostingEnvironment env)
