@@ -46,6 +46,10 @@ namespace xluhco.web
                     template: "",
                     defaults: new { controller = "Home", action = "Index" });
                 routes.MapRoute(
+                    name: "List",
+                    template: "list",
+                    defaults: new { controller = "Home", action = "List" });
+                routes.MapRoute(
                     name: "Default",
                     template: "{shortCode?}",
                     defaults: new {controller = "Redirect", action = "Index"});
