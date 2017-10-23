@@ -18,12 +18,24 @@
             All the links!
         </h1>
         <div class="content">
-            <ul>
-                @foreach (var item in Model)
-                {
-                    <li>@item.ShortLinkCode -- @item.URL</li>
-                }
-            </ul>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Short Code</td>
+                    <td>URL</td>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ShortLinkCode</td>
+                            <td>@item.URL</td>
+                        </tr>
+                    }
+                
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
