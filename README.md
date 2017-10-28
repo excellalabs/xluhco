@@ -6,8 +6,14 @@ A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
 ### Prerequisites
 
-* This project requires [.NET Core](https://www.microsoft.com/net/download/core). You'll want to download and install it.
+* This project requires [.NET Core](https://www.microsoft.com/net/download/core) v2.0. You'll want to download and install it.
 * For an IDE, you'll want to consider [VS Code](https://code.visualstudio.com) or [Visual Studio 2017](https://www.visualstudio.com/). VS Code is free and would be easy to use for this app.
+
+### Building the Project
+
+* Move to the `src` directory
+* Run `dotnet restore` to restore all of the packages
+* Run `dotnet build` to build the solution
 
 
 ## How This Works
