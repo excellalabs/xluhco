@@ -1,4 +1,4 @@
-﻿@model List<xluhco.web.ShortLinkItem>
+﻿@model xluhco.web.ListPageViewModel
 @{
     ViewBag.Title = "All the links";
     Layout = "~/Views/Shared/_layout.cshtml";
@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody class="list">
-            @foreach (var item in Model)
+            @foreach (var item in Model.ShortLinkList)
             {
                 <tr>
                     <td class="shortlink">xluh.co/@item.ShortLinkCode</td>
