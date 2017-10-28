@@ -29,6 +29,7 @@ namespace xluhco.web
             services.AddSingleton(x => Log.Logger);
             services.Configure<RedirectOptions>(Configuration);
             services.Configure<GoogleAnalyticsOptions>(Configuration);
+            services.Configure<SiteOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
