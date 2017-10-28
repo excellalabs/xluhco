@@ -15,6 +15,10 @@ A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 * Run `dotnet restore` to restore all of the packages
 * Run `dotnet build` to build the solution
 
+### Running the Project
+
+* Move to the `xluhco.Web` directory
+* Run `dotnet run` or `dotnet watch run` to run the project on a local web server.
 
 ## How This Works
 
