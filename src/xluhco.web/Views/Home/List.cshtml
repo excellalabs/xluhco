@@ -10,21 +10,35 @@
 <p class="subtitle">
     We've got a bunch.
 </p>
-<table class="table is-striped">
-    <thead>
-        <tr>
-            <td>Short Code</td>
-            <td>URL</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div id="shortlinks">
+    <input class="search" placeholder="Search" />
+    <table class="table is-striped">
+        <thead>
             <tr>
-                <td>xluh.co/@item.ShortLinkCode</td>
-                <td><a href="@item.URL">@item.URL</a></td>
+                <td>Short Code</td>
+                <td>URL</td>
             </tr>
-        }
+        </thead>
+        <tbody class="list">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="shortlink">xluh.co/@item.ShortLinkCode</td>
+                    <td class="url"><a href="@item.URL">@item.URL</a></td>
+                </tr>
+            }
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+
+@section ScriptBeforeEndOfBody {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script>
+        var options = {
+            valueNames: [ 'shortlink', 'url' ]
+        };
+
+        var userList = new List('shortlinks', options);
+    </script>
+}
