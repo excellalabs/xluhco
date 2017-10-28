@@ -1,7 +1,12 @@
-﻿@model xluhco.web.ListPageViewModel
+﻿@using Microsoft.Extensions.Options
+@using xluhco.web
+@inject IOptions<SiteOptions> SiteOptions
+@model List<xluhco.web.ShortLinkItem>
 @{
     ViewBag.Title = "All the links";
     Layout = "~/Views/Shared/_layout.cshtml";
+
+    var shortLinkUrl = SiteOptions.Value.ShortLinkUrl;
 }
 
 <h1 class="title">
@@ -20,10 +25,10 @@
             </tr>
         </thead>
         <tbody class="list">
-            @foreach (var item in Model.ShortLinkList)
+            @foreach (var item in Model)
             {
                 <tr>
-                    <td class="shortlink">@Model.SiteOptions.ShortLinkUrl/@item.ShortLinkCode</td>
+                    <td class="shortlink">@shortLinkUrl/@item.ShortLinkCode</td>
                     <td class="url"><a href="@item.URL">@item.URL</a></td>
                 </tr>
             }

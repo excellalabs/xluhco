@@ -23,8 +23,7 @@ namespace xluhco.web.Controllers
         public IActionResult List()
         {
             var orderedLinks = _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
-            var vm = new ListPageViewModel(orderedLinks, _siteOptions);
-            return View(vm);
+            return View(orderedLinks);
         }
     }
 }
