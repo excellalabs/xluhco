@@ -23,7 +23,7 @@
             @foreach (var item in Model.ShortLinkList)
             {
                 <tr>
-                    <td class="shortlink">xluh.co/@item.ShortLinkCode</td>
+                    <td class="shortlink">@Model.SiteOptions.ShortLinkUrl/@item.ShortLinkCode</td>
                     <td class="url"><a href="@item.URL">@item.URL</a></td>
                 </tr>
             }
