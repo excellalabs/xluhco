@@ -39,6 +39,7 @@ namespace xluhco.web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -54,6 +55,7 @@ namespace xluhco.web
                     template: "{shortCode?}",
                     defaults: new {controller = "Redirect", action = "Index"});
             });
+
         }
     }
 }
