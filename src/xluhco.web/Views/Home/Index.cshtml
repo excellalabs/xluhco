@@ -1,4 +1,4 @@
-﻿
+﻿@model xluhco.web.SiteOptions
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_layout.cshtml";
@@ -7,5 +7,5 @@
     Hello there!
 </h1>
 <p class="subtitle">
-    This is xluh.co, Excella's friendly URL redirect application.
+    This is @Model.ShortLinkUrl, @Model.CompanyName's friendly URL redirect application.
 </p>
