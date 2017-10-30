@@ -1,8 +1,10 @@
 ﻿@using Microsoft.Extensions.Options
 @using xluhco.web
 @inject IOptions<SiteOptions> SiteOptions
+@inject IOptions<GoogleAnalyticsOptions> GoogleAnalyticsOptions
 @{
     var shortLinkName = SiteOptions.Value.ShortLinkUrl;
+    var trackingId = GoogleAnalyticsOptions.Value.TrackingPropertyId;
 }
 <!DOCTYPE html>
 <html>
@@ -13,6 +15,7 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
     <link rel="icon" href="favicon.ico">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@trackingId"></script>
 </head>
 <body>
 <section class="section">
@@ -24,5 +27,14 @@
 </section>
 
 @RenderSection("ScriptBeforeEndOfBody", required:false)
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', '@trackingId');
+    </script>
 </body>
 </html>
