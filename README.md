@@ -2,6 +2,9 @@
 
 A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/n2268tskumo12j57?svg=true)](https://ci.appveyor.com/project/SeanKilleen/xluhco)
+
+
 ## How to Build This Project
 
 ### Prerequisites
