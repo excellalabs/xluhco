@@ -28,7 +28,14 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="shortlink">@shortLinkUrl/@item.ShortLinkCode</td>
+                    <td class="shortlink">
+                            <span class="icon">
+                                <i class="fa fa-clipboard clipboard-btn" aria-hidden="true" alt="Copy to clipboard" data-clipboard-text="http://@shortLinkUrl/@item.ShortLinkCode"></i> 
+                            </span>
+                            <span>
+                                @shortLinkUrl/@item.ShortLinkCode
+                            </span>
+                    </td>
                     <td class="url"><a href="@item.URL">@item.URL</a></td>
                 </tr>
             }
@@ -38,7 +45,12 @@
 </div>
 
 @section ScriptBeforeEndOfBody {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+    <script>
+        new Clipboard('.clipboard-btn');
+    </script>
     <script>
         var options = {
             valueNames: [ 'shortlink', 'url' ]
