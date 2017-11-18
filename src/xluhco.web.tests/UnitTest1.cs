@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace xluhco.web.tests
@@ -9,8 +10,7 @@ namespace xluhco.web.tests
         public void MathWorks()
         {
             var sum = 1 + 1;
-
-            Assert.Equal(2, sum);
+            sum.Should().Be(2);
         }
     }
 }
