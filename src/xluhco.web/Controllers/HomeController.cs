@@ -7,7 +7,7 @@ namespace xluhco.web.Controllers
 {
     public class HomeController : Controller
     {
-        private IShortLinkRepository _repo;
+        private readonly IShortLinkRepository _repo;
 
         public HomeController(IShortLinkRepository repo)
         {
