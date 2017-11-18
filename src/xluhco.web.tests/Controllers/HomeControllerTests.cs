@@ -11,8 +11,8 @@ namespace xluhco.web.tests.Controllers
 {
     public class HomeControllerTests
     {
-        private Mock<IShortLinkRepository> _mockRepo;
-        private HomeController _sut;
+        private readonly Mock<IShortLinkRepository> _mockRepo;
+        private readonly HomeController _sut;
 
         public HomeControllerTests()
         {
@@ -23,6 +23,7 @@ namespace xluhco.web.tests.Controllers
         [Fact]
         public void Ctor_NullRepository_ThrowsError()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new HomeController(null);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
@@ -77,8 +78,10 @@ namespace xluhco.web.tests.Controllers
             var model = Assert.IsAssignableFrom<IEnumerable<ShortLinkItem>>(
                 viewResult.ViewData.Model);
 
+            // ReSharper disable PossibleMultipleEnumeration
             model.Should().HaveCount(1);
             model.First().ShortLinkCode.Should().Be("abc");
+            // ReSharper enable PossibleMultipleEnumeration
         }
 
         [Fact]
