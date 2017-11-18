@@ -1,17 +1,20 @@
-﻿@model xluhco.web.SiteOptions
+﻿@using Microsoft.Extensions.Options
+@using xluhco.web
+@inject IOptions<SiteOptions> SiteOptions
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_layout.cshtml";
+    var options = SiteOptions.Value;
 }
 <h1 class="title">
     Hello there!
 </h1>
 <p class="subtitle">
-    This is @Model.ShortLinkUrl, @Model.CompanyName's friendly URL redirect application.
+    This is @options.ShortLinkUrl, @options.CompanyName's friendly URL redirect application.
 </p>
 
 <p class="subtitle">
-    You can head to our home page at <a href="@Model.CompanyHomePageUrl">@Model.CompanyHomePageUrl</a>.
+    You can head to our home page at <a href="@options.CompanyHomePageUrl">@options.CompanyHomePageUrl</a>.
 </p>
 
 <p class="subtitle">

@@ -7,17 +7,15 @@ namespace xluhco.web.Controllers
     public class HomeController : Controller
     {
         private IShortLinkRepository _repo;
-        private SiteOptions _siteOptions;
 
-        public HomeController(IShortLinkRepository repo, IOptions<SiteOptions> siteOptions)
+        public HomeController(IShortLinkRepository repo)
         {
             _repo = repo;
-            _siteOptions = siteOptions.Value;
         }
 
         public IActionResult Index()
         {
-            return View(_siteOptions);
+            return View();
         }
 
         public IActionResult List()
