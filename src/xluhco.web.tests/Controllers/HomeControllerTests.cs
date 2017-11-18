@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -62,6 +63,44 @@ namespace xluhco.web.tests.Controllers
                 viewResult.ViewData.Model);
 
             model.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void List_OneListItem_ReturnsItem()
+        {
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>(){new ShortLinkItem("abc", "http://seankilleen.com")});
+
+            var result = _sut.List();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var model = Assert.IsAssignableFrom<IEnumerable<ShortLinkItem>>(
+                viewResult.ViewData.Model);
+
+            model.Should().HaveCount(1);
+            model.First().ShortLinkCode.Should().Be("abc");
+        }
+
+        [Fact]
+        public void List_MultipleItems_ReturnsItemsSortedByShortCode()
+        {
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>()
+            {
+                new ShortLinkItem("ghi", "http://seankilleen.com"),
+                new ShortLinkItem("def", "http://seankilleen.com"),
+                new ShortLinkItem("abc", "http://seankilleen.com")
+            });
+
+            var result = _sut.List();
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+
+            var model = Assert.IsAssignableFrom<IEnumerable<ShortLinkItem>>(
+                viewResult.ViewData.Model);
+
+            model.Should().HaveCount(3);
+            model.First().ShortLinkCode.Should().Be("abc");
+            model.Last().ShortLinkCode.Should().Be("ghi");
         }
     }
 }
