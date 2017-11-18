@@ -10,8 +10,7 @@ namespace xluhco.web.Controllers
 
         public HomeController(IShortLinkRepository repo)
         {
-            if(repo == null) { throw new ArgumentNullException(nameof(repo));}
-            _repo = repo;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
         public IActionResult Index()
