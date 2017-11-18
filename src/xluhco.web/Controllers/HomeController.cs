@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -10,6 +11,7 @@ namespace xluhco.web.Controllers
 
         public HomeController(IShortLinkRepository repo)
         {
+            if(repo == null) { throw new ArgumentNullException(nameof(repo));}
             _repo = repo;
         }
 
