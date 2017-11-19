@@ -14,8 +14,8 @@ namespace xluhco.web.Controllers
         public RedirectController(IShortLinkRepository shortLinkRepo, Serilog.ILogger logger, IOptions<RedirectOptions> redirectOptions, IOptions<GoogleAnalyticsOptions> gaOptions)
         {
             _shortLinkRepo = shortLinkRepo ?? throw new ArgumentNullException(nameof(shortLinkRepo));
-            _logger = logger;
-            _redirectOptions = redirectOptions.Value;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _redirectOptions = redirectOptions?.Value ?? throw new ArgumentNullException(nameof(redirectOptions));
             _gaOptions = gaOptions.Value;
         }
 

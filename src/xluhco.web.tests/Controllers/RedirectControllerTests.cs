@@ -26,6 +26,34 @@ namespace xluhco.web.tests.Controllers
                 act.ShouldThrow<ArgumentNullException>()
                     .And.ParamName.Should().Be("shortLinkRepo");
             }
+
+            [Fact]
+            public void NullLogger_ThrowsError()
+            {
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    null,
+                    Dummy.Of<IOptions<RedirectOptions>>(),
+                    Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
+
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.ParamName.Should().Be("logger");
+            }
+
+            [Fact]
+            public void NullRedirectOptions_ThrowsError()
+            {
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    Dummy.Of<ILogger>(),
+                    null,
+                    Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
+
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.ParamName.Should().Be("redirectOptions");
+            }
+
+            //TODO: Null google analytics options
         }
     }
 
