@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace xluhco.web.tests.Controllers
+namespace xluhco.web.tests
 {
     public static class Dummy
     {
