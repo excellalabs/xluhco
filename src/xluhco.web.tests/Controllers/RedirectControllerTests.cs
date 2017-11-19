@@ -18,14 +18,23 @@ namespace xluhco.web.tests.Controllers
             public void NullShortLinkRepository_ThrowsError()
             {
                 Action act = () => new RedirectController(
-                    null, new Mock<ILogger>().Object,
-                    new Mock<IOptions<RedirectOptions>>().Object, 
-                    new Mock<IOptions<GoogleAnalyticsOptions>>().Object);
+                    null, 
+                    Dummy.Of<ILogger>(),
+                    Dummy.Of<IOptions<RedirectOptions>>(), 
+                    Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
 
                 act.ShouldThrow<ArgumentNullException>()
                     .And.ParamName.Should().Be("shortLinkRepo");
             }
         }
-
     }
+
+    public static class Dummy
+    {
+        public static T Of<T>() where T : class
+        {
+            return new Mock<T>().Object;
+        }
+    }
+
 }
