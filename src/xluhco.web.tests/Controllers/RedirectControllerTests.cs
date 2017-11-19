@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -223,6 +221,57 @@ namespace xluhco.web.tests.Controllers
                 sut.Index("thisCodeDoesntMatter");
 
                 _mockLogger.Verify(x=>x.Information("Redirecting {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", testShortCode, testUrl, testGaCode));
+            }
+
+            [Fact]
+            public void UrlFound_ReturnsIndexPage()
+            {
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
+                    .Returns(new ShortLinkItem("test", "http://test.com"));
+
+                var result = _sut.Index("thisCodeDoesntMatter");
+
+                var viewResult = Assert.IsType<ViewResult>(result);
+
+                viewResult.ViewName.Should().Be("Index");
+            }
+
+            [Fact]
+            public void UrlFound_PopulatesViewModelCorrectly()
+            {
+                var testShortCode = "sk";
+                var testUrl = "http://SeanKilleen.com";
+                var testGaCode = "12345";
+                var testSecondsToWait = 3;
+
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
+                    .Returns(new ShortLinkItem(testShortCode, testUrl));
+
+                _mockGaOptions.Setup(x => x.Value)
+                    .Returns(new GoogleAnalyticsOptions { TrackingPropertyId = testGaCode });
+
+                _mockRedirectOptions.Setup(x => x.Value)
+                    .Returns(new RedirectOptions { SecondsToWaitForAnalytics = testSecondsToWait });
+
+                // need to recreate SUT instead of setup because .Value is used in the Ctor, 
+                // meaning we can't just overwrite it with a Mock.
+                var sut = new RedirectController(
+                    _mockRepo.Object,
+                    _mockLogger.Object,
+                    _mockRedirectOptions.Object,
+                    _mockGaOptions.Object);
+
+                var result = sut.Index(testShortCode);
+
+                var viewResult = Assert.IsType<ViewResult>(result);
+
+                var model = Assert.IsAssignableFrom<RedirectViewModel>(
+                    viewResult.ViewData.Model);
+
+                model.ShortLinkCode.Should().Be(testShortCode);
+                model.NumberOfSecondsToWait.Should().Be(testSecondsToWait);
+                model.TrackingCode.Should().Be(testGaCode);
+                model.Url.Should().Be(testUrl);
             }
         }
     }
