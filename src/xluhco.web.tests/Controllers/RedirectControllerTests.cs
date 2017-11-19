@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using xluhco.web.Controllers;
 using Xunit;
+// ReSharper disable ObjectCreationAsStatement
 
 namespace xluhco.web.tests.Controllers
 {
