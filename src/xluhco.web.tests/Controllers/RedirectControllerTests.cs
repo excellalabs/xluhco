@@ -53,7 +53,74 @@ namespace xluhco.web.tests.Controllers
                     .And.ParamName.Should().Be("redirectOptions");
             }
 
-            //TODO: Null google analytics options
+            [Fact]
+            public void NullRedirectOptionsValue_ThrowsError()
+            {
+                var mockRedirectOptions = new Mock<IOptions<RedirectOptions>>();
+                mockRedirectOptions.Setup(x => x.Value).Returns((RedirectOptions) null);
+
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    Dummy.Of<ILogger>(),
+                    mockRedirectOptions.Object,
+                    null);
+
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.ParamName.Should().Be("redirectOptions");
+            }
+
+            [Fact]
+            public void NullAnalyticsOptions_ThrowsError()
+            {
+                var mockRedirectOptions = new Mock<IOptions<RedirectOptions>>();
+                mockRedirectOptions.Setup(x => x.Value).Returns(new RedirectOptions());
+
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    Dummy.Of<ILogger>(),
+                    mockRedirectOptions.Object,
+                    null);
+
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.ParamName.Should().Be("gaOptions");
+            }
+
+            [Fact]
+            public void NullAnalyticsOptionsValue_ThrowsError()
+            {
+                var mockRedirectOptions = new Mock<IOptions<RedirectOptions>>();
+                mockRedirectOptions.Setup(x => x.Value).Returns(new RedirectOptions());
+
+                var mockAnalyticsOptions = new Mock<IOptions<GoogleAnalyticsOptions>>();
+                mockAnalyticsOptions.Setup(x => x.Value).Returns((GoogleAnalyticsOptions) null);
+
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    Dummy.Of<ILogger>(),
+                    mockRedirectOptions.Object,
+                    mockAnalyticsOptions.Object);
+
+                act.ShouldThrow<ArgumentNullException>()
+                    .And.ParamName.Should().Be("gaOptions");
+            }
+
+            [Fact]
+            public void AllValuesNonNull_DoesntThrowError()
+            {
+                var mockRedirectOptions = new Mock<IOptions<RedirectOptions>>();
+                mockRedirectOptions.Setup(x => x.Value).Returns(new RedirectOptions());
+
+                var mockAnalyticsOptions = new Mock<IOptions<GoogleAnalyticsOptions>>();
+                mockAnalyticsOptions.Setup(x => x.Value).Returns(new GoogleAnalyticsOptions());
+
+                Action act = () => new RedirectController(
+                    Dummy.Of<IShortLinkRepository>(),
+                    Dummy.Of<ILogger>(),
+                    mockRedirectOptions.Object,
+                    mockAnalyticsOptions.Object);
+
+                act.ShouldNotThrow();
+            }
         }
     }
 
@@ -63,6 +130,7 @@ namespace xluhco.web.tests.Controllers
         {
             return new Mock<T>().Object;
         }
+
     }
 
 }

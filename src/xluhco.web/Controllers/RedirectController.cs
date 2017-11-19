@@ -16,7 +16,7 @@ namespace xluhco.web.Controllers
             _shortLinkRepo = shortLinkRepo ?? throw new ArgumentNullException(nameof(shortLinkRepo));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _redirectOptions = redirectOptions?.Value ?? throw new ArgumentNullException(nameof(redirectOptions));
-            _gaOptions = gaOptions.Value;
+            _gaOptions = gaOptions?.Value ?? throw new ArgumentNullException(nameof(gaOptions));
         }
 
         [HttpGet]
