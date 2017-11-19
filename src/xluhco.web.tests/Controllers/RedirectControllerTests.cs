@@ -121,5 +121,22 @@ namespace xluhco.web.tests.Controllers
                 act.ShouldNotThrow();
             }
         }
+
+        public class Index
+        {
+            private readonly RedirectController _sut;
+            private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+            private readonly Mock<IShortLinkRepository> _mockRepo = new Mock<IShortLinkRepository>();
+            private readonly Mock<IOptions<GoogleAnalyticsOptions>> _mockGaOptions = new Mock<IOptions<GoogleAnalyticsOptions>>();
+            private readonly Mock<IOptions<RedirectOptions>> _mockRedirectOptions = new Mock<IOptions<RedirectOptions>>();
+
+            public Index()
+            {
+                _mockRedirectOptions.Setup(x => x.Value).Returns(new RedirectOptions());
+                _mockGaOptions.Setup(x => x.Value).Returns(new GoogleAnalyticsOptions());
+
+                _sut = new RedirectController(_mockRepo.Object, _mockLogger.Object, _mockRedirectOptions.Object, _mockGaOptions.Object);
+            }
+        }
     }
 }
