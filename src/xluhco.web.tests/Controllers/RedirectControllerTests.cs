@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
@@ -136,6 +139,90 @@ namespace xluhco.web.tests.Controllers
                 _mockGaOptions.Setup(x => x.Value).Returns(new GoogleAnalyticsOptions());
 
                 _sut = new RedirectController(_mockRepo.Object, _mockLogger.Object, _mockRedirectOptions.Object, _mockGaOptions.Object);
+            }
+
+            [Fact]
+            public void LogsTheRedirectShortCode()
+            {
+                _sut.Index("abc");
+
+                _mockLogger.Verify(x=> x.Debug("Entered the redirect for short code {shortCode}", "abc"));
+            }
+
+            [Fact]
+            public void NoShortCode_LogsWarning()
+            {
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns((ShortLinkItem) null);
+
+                _sut.Index("abc");
+
+                _mockLogger.Verify(x=>x.Warning("No redirect found for requested short code {shortCode}", "abc"));
+            }
+
+            [Fact]
+            public void NoShortCode_ReturnsNotFound()
+            {
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns((ShortLinkItem)null);
+
+                var result = _sut.Index("abc");
+
+                var viewResult = Assert.IsType<ViewResult>(result);
+
+                viewResult.ViewName.Should().Be("NotFound");
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData("    ")]
+            public void EmptyShortCodeUrl_LogsWarning(string urlToTest)
+            {
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(new ShortLinkItem("abc", urlToTest));
+
+                _sut.Index("abc");
+
+                _mockLogger.Verify(x => x.Warning("No redirect found for requested short code {shortCode}", "abc"));
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData("    ")]
+            public void EmptyShortCodeUrl_ReturnsNotFound(string urlToTest)
+            {
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(new ShortLinkItem("abc", urlToTest));
+
+                var result = _sut.Index("abc");
+
+                var viewResult = Assert.IsType<ViewResult>(result);
+
+                viewResult.ViewName.Should().Be("NotFound");
+            }
+
+            [Fact]
+            public void UrlFound_LogsShortCodeAndURLAndTrackingId()
+            {
+                var testShortCode = "sk";
+                var testUrl = "http://SeanKilleen.com";
+                var testGaCode = "12345";
+
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
+                    .Returns(new ShortLinkItem(testShortCode, testUrl));
+
+                _mockGaOptions.Setup(x => x.Value)
+                    .Returns(new GoogleAnalyticsOptions {TrackingPropertyId = testGaCode});
+
+                // need to recreate SUT instead of setup because .Value is used in the Ctor, 
+                // meaning we can't just overwrite it with a Mock.
+                var sut = new RedirectController(
+                    _mockRepo.Object, 
+                    _mockLogger.Object, 
+                    _mockRedirectOptions.Object, 
+                    _mockGaOptions.Object);
+
+                sut.Index("thisCodeDoesntMatter");
+
+                _mockLogger.Verify(x=>x.Information("Redirecting {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", testShortCode, testUrl, testGaCode));
             }
         }
     }
