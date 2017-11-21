@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using Moq;
 using Serilog;
 using xluhco.web.Repositories;
 using Xunit;
@@ -40,6 +41,15 @@ namespace xluhco.web.tests.Repositories
 
         public class GetShortLinks
         {
+            private CachedShortLinkRepository _sut;
+            private readonly Mock<IShortLinkRepository> _mockRepo = new Mock<IShortLinkRepository>();
+            private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+
+            public GetShortLinks()
+            {
+                _sut = new CachedShortLinkRepository(_mockLogger.Object, _mockRepo.Object);
+            }
+
             [Fact]
             public void IfLinksInCache_ReturnsLinks()
             {
