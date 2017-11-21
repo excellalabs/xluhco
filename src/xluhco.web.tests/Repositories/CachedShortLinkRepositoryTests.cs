@@ -129,7 +129,6 @@ namespace xluhco.web.tests.Repositories
                 result.Should().NotBeNull();
                 result.Should().BeEmpty();
             }
-
         }
 
         public class GetByShortCode
