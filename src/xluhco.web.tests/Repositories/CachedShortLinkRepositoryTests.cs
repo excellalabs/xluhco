@@ -26,6 +26,16 @@ namespace xluhco.web.tests.Repositories
 
                 act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
             }
+
+            [Fact]
+            public void AllDependencies_DoesntThrow()
+            {
+                Action act = () => new CachedShortLinkRepository(
+                    Dummy.Of<ILogger>(), 
+                    Dummy.Of<IShortLinkRepository>());
+
+                act.ShouldNotThrow();
+            }
         }
 
         public class GetShortLinks
