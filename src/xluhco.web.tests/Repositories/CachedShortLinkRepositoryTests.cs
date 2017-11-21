@@ -73,8 +73,9 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfNoLinks_PopulatesFromRepo()
             {
-                throw new NotImplementedException();
+                _sut.GetShortLinks();
 
+                _mockRepo.Verify(x=>x.GetShortLinks(), Times.Once);
             }
 
             [Fact]
