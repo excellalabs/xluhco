@@ -135,23 +135,57 @@ namespace xluhco.web.tests.Repositories
 
         public class GetByShortCode
         {
+            private readonly CachedShortLinkRepository _sut;
+            private readonly Mock<IShortLinkRepository> _mockRepo = new Mock<IShortLinkRepository>();
+            private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
+
+            public GetByShortCode()
+            {
+                _sut = new CachedShortLinkRepository(
+                    _mockLogger.Object,
+                    _mockRepo.Object);
+
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
+            }
+
+
             [Fact]
             public void IfLinksInCache_ReturnsMatchingLink()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>
+                    {
+                        new ShortLinkItem("abc", "blahblahabc"),
+                        new ShortLinkItem("def", "blahblah")
+                    });
+
+                var result = _sut.GetByShortCode("abc");
+
+                result.URL.Should().Be("blahblahabc");
             }
 
             [Fact]
             public void IfLinksInCacheButNoneMatching_ReturnNull()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>
+                    {
+                        new ShortLinkItem("abc", "blahblahabc"),
+                        new ShortLinkItem("def", "blahblah")
+                    });
+
+                var result = _sut.GetByShortCode("wontbefound");
+
+                result.Should().BeNull();
             }
 
             [Fact]
             public void IfNoLinks_LogsWarning()
             {
-                throw new NotImplementedException();
+                _sut.GetByShortCode("test");
 
+                _mockLogger.Verify(x => x.Warning("No short links in cache -- populating from repo"), Times.Once);
             }
 
             [Fact]
