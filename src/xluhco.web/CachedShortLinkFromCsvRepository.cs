@@ -8,20 +8,18 @@ using Serilog;
 
 namespace xluhco.web
 {
-    public class CachedShortLinkFromCsvRepository : IShortLinkRepository
+    public class ShortLinkFromCsvRepository : IShortLinkRepository
     {
-        private List<ShortLinkItem> _shortLinks;
-        private readonly IHostingEnvironment _env;
         private readonly ILogger _logger;
+        private readonly IHostingEnvironment _env;
 
-        public CachedShortLinkFromCsvRepository(IHostingEnvironment env, ILogger logger)
+        public ShortLinkFromCsvRepository(ILogger logger, IHostingEnvironment env)
         {
-            _env = env;
             _logger = logger;
-            _shortLinks = new List<ShortLinkItem>();
+            _env = env;
         }
 
-        private void PopulateShortLinks()
+        public List<ShortLinkItem> GetShortLinks()
         {
             _logger.Information("Beginning to populate short links");
 
@@ -36,32 +34,60 @@ namespace xluhco.web
                     var csv = new CsvReader(reader);
                     var records = csv.GetRecords<ShortLinkItem>();
 
-                    _shortLinks = records.ToList();
-                    _logger.Information("Populated {numberOfShortLinks} short links", _shortLinks.Count);
+                    var shortLinks = records.ToList();
+                    _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
+
+                    return shortLinks;
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, "An error occurred while attempting to populate short linkes from {filePath}", filePath);
+                return new List<ShortLinkItem>();
             }
         }
 
-        public List<ShortLinkItem> GetShortLinks()
+        public ShortLinkItem GetByShortCode(string shortCode)
         {
-            if (!_shortLinks.Any())
+            var shortLinks = GetShortLinks();
+
+            return shortLinks
+                .FirstOrDefault(x => x.ShortLinkCode.Equals(shortCode, StringComparison.InvariantCultureIgnoreCase));
+        }
+    }
+    public class CachedShortLinkFromCsvRepository : IShortLinkRepository
+    {
+        private List<ShortLinkItem> _shortLinks;
+        private readonly ILogger _logger;
+        private readonly IShortLinkRepository _repo;
+
+        public CachedShortLinkFromCsvRepository(ILogger logger, IShortLinkRepository repo)
+        {
+            _logger = logger;
+            _repo = repo;
+            _shortLinks = new List<ShortLinkItem>();
+        }
+
+        private void PopulateShortLinksIfNone()
+        {
+            if (_shortLinks.Any())
             {
-                PopulateShortLinks();
+                return;
             }
 
+            _logger.Warning("No short links in cache -- populating from repo");
+            _shortLinks = _repo.GetShortLinks();
+            _logger.Information("Afer populating from cache, there are now {numShortLinks} short links", _shortLinks.Count);
+        }
+        public List<ShortLinkItem> GetShortLinks()
+        {
+            PopulateShortLinksIfNone();
             return _shortLinks;
         }
 
         public ShortLinkItem GetByShortCode(string shortCode)
         {
-            if (!_shortLinks.Any())
-            {
-                PopulateShortLinks();
-            }
+            PopulateShortLinksIfNone();
 
             return _shortLinks
                 .FirstOrDefault(x => x.ShortLinkCode.Equals(shortCode, StringComparison.InvariantCultureIgnoreCase));
