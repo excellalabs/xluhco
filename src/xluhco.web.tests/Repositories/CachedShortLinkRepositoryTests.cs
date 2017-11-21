@@ -1,4 +1,6 @@
 ﻿using System;
+using FluentAssertions;
+using xluhco.web.Repositories;
 using Xunit;
 
 namespace xluhco.web.tests.Repositories
@@ -10,7 +12,9 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void NullLogger_ThrowsException()
             {
-                throw new NotImplementedException();
+                Action act = () => new CachedShortLinkRepository(null, Dummy.Of<IShortLinkRepository>());
+
+                act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("logger");
             }
 
             [Fact]
