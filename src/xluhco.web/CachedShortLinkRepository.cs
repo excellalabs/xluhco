@@ -29,6 +29,7 @@ namespace xluhco.web
             _shortLinks = _repo.GetShortLinks();
             _logger.Information("Afer populating from cache, there are now {numShortLinks} short links", _shortLinks.Count);
         }
+
         public List<ShortLinkItem> GetShortLinks()
         {
             PopulateShortLinksIfNone();
