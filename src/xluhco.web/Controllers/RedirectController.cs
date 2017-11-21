@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using xluhco.web.Repositories;
 
 namespace xluhco.web.Controllers
 {

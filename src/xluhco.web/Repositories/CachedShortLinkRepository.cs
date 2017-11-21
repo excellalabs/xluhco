@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Serilog;
 
-namespace xluhco.web
+namespace xluhco.web.Repositories
 {
     public class CachedShortLinkRepository : IShortLinkRepository
     {

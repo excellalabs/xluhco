@@ -5,6 +5,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using xluhco.web.Controllers;
+using xluhco.web.Repositories;
 using Xunit;
 
 namespace xluhco.web.tests.Controllers

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Serilog;
 using xluhco.web.Controllers;
+using xluhco.web.Repositories;
 using Xunit;
 // ReSharper disable ObjectCreationAsStatement
 

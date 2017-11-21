@@ -6,7 +6,7 @@ using CsvHelper;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
 
-namespace xluhco.web
+namespace xluhco.web.Repositories
 {
     public class ShortLinkFromCsvRepository : IShortLinkRepository
     {
