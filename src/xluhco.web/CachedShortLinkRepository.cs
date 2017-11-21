@@ -5,13 +5,13 @@ using Serilog;
 
 namespace xluhco.web
 {
-    public class CachedShortLinkFromCsvRepository : IShortLinkRepository
+    public class CachedShortLinkRepository : IShortLinkRepository
     {
         private List<ShortLinkItem> _shortLinks;
         private readonly ILogger _logger;
         private readonly IShortLinkRepository _repo;
 
-        public CachedShortLinkFromCsvRepository(ILogger logger, IShortLinkRepository repo)
+        public CachedShortLinkRepository(ILogger logger, IShortLinkRepository repo)
         {
             _logger = logger;
             _repo = repo;

@@ -27,12 +27,12 @@ namespace xluhco.web
             services.AddMvc();
             services.AddSingleton(x => Log.Logger);
             services.AddSingleton<ShortLinkFromCsvRepository>();
-            services.AddSingleton<IShortLinkRepository, CachedShortLinkFromCsvRepository>((ctx) =>
+            services.AddSingleton<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
             {
                 var repoService = ctx.GetRequiredService<ShortLinkFromCsvRepository>();
                 var logger = ctx.GetRequiredService<Serilog.ILogger>();
 
-                return new CachedShortLinkFromCsvRepository(logger, repoService);
+                return new CachedShortLinkRepository(logger, repoService);
             });
             services.Configure<RedirectOptions>(Configuration);
             services.Configure<GoogleAnalyticsOptions>(Configuration);
