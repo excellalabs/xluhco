@@ -96,14 +96,25 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfPopulatedWithNoLinks_CallsRepoAgain()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
+
+                _sut.GetShortLinks();
+                _sut.GetShortLinks();
+
+                _mockRepo.Verify(x=>x.GetShortLinks(), Times.Exactly(2));
             }
 
             [Fact]
             public void IfPopulatedWithNoLinks_ReturnsEmptyList()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
 
+                var result = _sut.GetShortLinks();
+
+                result.Should().NotBeNull();
+                result.Should().BeEmpty();
             }
 
         }
