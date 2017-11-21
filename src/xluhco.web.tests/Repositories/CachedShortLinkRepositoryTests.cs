@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Versioning;
 using FluentAssertions;
 using Moq;
 using Serilog;
@@ -59,7 +61,19 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfLinksInCache_ReturnsLinks()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>
+                    {
+                        new ShortLinkItem("abc", "blahblah"),
+                        new ShortLinkItem("def", "blahblah")
+                    });
+
+                var result= _sut.GetShortLinks();
+
+                result.Should().HaveCount(2);
+
+                result.First().ShortLinkCode.Should().Be("abc");
+                result.Last().ShortLinkCode.Should().Be("def");
             }
 
             [Fact]
