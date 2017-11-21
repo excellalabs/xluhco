@@ -81,8 +81,16 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfNoLinks_AfterPopulating_LogsCount()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>
+                    {
+                        new ShortLinkItem("abc", "blahblah"),
+                        new ShortLinkItem("def", "blahblah")
+                    });
 
+                _sut.GetShortLinks();
+
+                _mockLogger.Verify(x=>x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]
