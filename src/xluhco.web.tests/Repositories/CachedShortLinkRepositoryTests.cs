@@ -2,6 +2,7 @@
 using FluentAssertions;
 using xluhco.web.Repositories;
 using Xunit;
+// ReSharper disable ObjectCreationAsStatement
 
 namespace xluhco.web.tests.Repositories
 {
