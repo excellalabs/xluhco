@@ -14,7 +14,7 @@ namespace xluhco.web.Repositories
         public CachedShortLinkRepository(ILogger logger, IShortLinkRepository repo)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _repo = repo;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
             _shortLinks = new List<ShortLinkItem>();
         }
 

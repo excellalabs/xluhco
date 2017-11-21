@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentAssertions;
+using Serilog;
 using xluhco.web.Repositories;
 using Xunit;
 // ReSharper disable ObjectCreationAsStatement
@@ -21,7 +22,9 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void NullRepo_ThrowsException()
             {
-                throw new NotImplementedException();
+                Action act = () => new CachedShortLinkRepository(Dummy.Of<ILogger>(), null);
+
+                act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
             }
         }
 
