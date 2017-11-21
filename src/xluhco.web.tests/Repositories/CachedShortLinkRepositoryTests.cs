@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using Serilog;
@@ -41,13 +42,18 @@ namespace xluhco.web.tests.Repositories
 
         public class GetShortLinks
         {
-            private CachedShortLinkRepository _sut;
+            private readonly CachedShortLinkRepository _sut;
             private readonly Mock<IShortLinkRepository> _mockRepo = new Mock<IShortLinkRepository>();
             private readonly Mock<ILogger> _mockLogger = new Mock<ILogger>();
 
             public GetShortLinks()
             {
-                _sut = new CachedShortLinkRepository(_mockLogger.Object, _mockRepo.Object);
+                _sut = new CachedShortLinkRepository(
+                    _mockLogger.Object, 
+                    _mockRepo.Object);
+
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
             }
 
             [Fact]
@@ -59,8 +65,9 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfNoLinks_LogsWarning()
             {
-                throw new NotImplementedException();
+                _sut.GetShortLinks();
 
+                _mockLogger.Verify(x=>x.Warning("No short links in cache -- populating from repo"), Times.Once);
             }
 
             [Fact]
