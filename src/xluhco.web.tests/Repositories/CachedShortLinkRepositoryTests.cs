@@ -191,28 +191,47 @@ namespace xluhco.web.tests.Repositories
             [Fact]
             public void IfNoLinks_PopulatesFromRepo()
             {
-                throw new NotImplementedException();
+                _sut.GetByShortCode("test");
 
+                _mockRepo.Verify(x=>x.GetShortLinks(), Times.Once);
             }
 
             [Fact]
             public void IfNoLinks_AfterPopulating_LogsCount()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>
+                    {
+                        new ShortLinkItem("abc", "blahblah"),
+                        new ShortLinkItem("def", "blahblah")
+                    });
 
+                _sut.GetByShortCode("test");
+
+                _mockLogger.Verify(x => x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]
             public void IfPopulatedWithNoLinks_CallsRepoAgain()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
+
+                _sut.GetByShortCode("test");
+                _sut.GetByShortCode("test");
+
+                _mockRepo.Verify(x => x.GetShortLinks(), Times.Exactly(2));
             }
 
             [Fact]
-            public void IfPopulatedWithNoLinks_ReturnsEmptyList()
+            public void IfPopulatedWithNoLinks_ReturnsNull()
             {
-                throw new NotImplementedException();
+                _mockRepo.Setup(x => x.GetShortLinks())
+                    .Returns(new List<ShortLinkItem>());
 
+                var result = _sut.GetByShortCode("test");
+
+                result.Should().BeNull();
             }
         }
     }
