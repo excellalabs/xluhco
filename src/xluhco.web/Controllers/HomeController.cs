@@ -1,29 +1,29 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using xluhco.web.Repositories;
 
 namespace xluhco.web.Controllers
 {
     public class HomeController : Controller
     {
-        private IShortLinkRepository _repo;
-        private SiteOptions _siteOptions;
+        private readonly IShortLinkRepository _repo;
 
-        public HomeController(IShortLinkRepository repo, IOptions<SiteOptions> siteOptions)
+        public HomeController(IShortLinkRepository repo)
         {
-            _repo = repo;
-            _siteOptions = siteOptions.Value;
+            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
         public IActionResult Index()
         {
-            return View(_siteOptions);
+            return View("Index");
         }
 
         public IActionResult List()
         {
             var orderedLinks = _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
-            return View(orderedLinks);
+            return View("List", orderedLinks);
         }
     }
 }

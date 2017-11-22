@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using xluhco.web.Repositories;
 
 namespace xluhco.web
 {
@@ -25,8 +26,15 @@ namespace xluhco.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<IShortLinkRepository, CachedShortLinkFromCsvRepository>();
             services.AddSingleton(x => Log.Logger);
+            services.AddSingleton<ShortLinkFromCsvRepository>();
+            services.AddSingleton<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
+            {
+                var repoService = ctx.GetRequiredService<ShortLinkFromCsvRepository>();
+                var logger = ctx.GetRequiredService<Serilog.ILogger>();
+
+                return new CachedShortLinkRepository(logger, repoService);
+            });
             services.Configure<RedirectOptions>(Configuration);
             services.Configure<GoogleAnalyticsOptions>(Configuration);
             services.Configure<SiteOptions>(Configuration);

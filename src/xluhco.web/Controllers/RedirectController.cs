@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using xluhco.web.Repositories;
 
 namespace xluhco.web.Controllers
 {
@@ -12,10 +14,10 @@ namespace xluhco.web.Controllers
 
         public RedirectController(IShortLinkRepository shortLinkRepo, Serilog.ILogger logger, IOptions<RedirectOptions> redirectOptions, IOptions<GoogleAnalyticsOptions> gaOptions)
         {
-            _shortLinkRepo = shortLinkRepo;
-            _logger = logger;
-            _redirectOptions = redirectOptions.Value;
-            _gaOptions = gaOptions.Value;
+            _shortLinkRepo = shortLinkRepo ?? throw new ArgumentNullException(nameof(shortLinkRepo));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _redirectOptions = redirectOptions?.Value ?? throw new ArgumentNullException(nameof(redirectOptions));
+            _gaOptions = gaOptions?.Value ?? throw new ArgumentNullException(nameof(gaOptions));
         }
 
         [HttpGet]
