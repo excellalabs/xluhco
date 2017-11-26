@@ -1,0 +1,19 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+nuget:
+  project_feed: true
+before_build:
+- ps: >-
+    dotnet --version
+
+    cd .\src
+
+    dotnet restore
+build:
+  verbosity: minimal
+deploy: off
+notifications:
+- provider: GitHubPullRequest
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
