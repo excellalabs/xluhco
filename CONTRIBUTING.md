@@ -1,13 +1,19 @@
 # How to Contribute to this Project
 
-Coming soon.
+## How to Submit an Issue
+
+TODO
+
+## How to Submit a Pull Request
+
+TODO
 
 ## How to Build This Project
 
 ### Prerequisites
 
 * This project requires [.NET Core](https://www.microsoft.com/net/download/core) v2.0. You'll want to download and install it. It's cross-platform; you should be able to find an installer that works for you.
-* For an IDE, you'll want to consider [VS Code](https://code.visualstudio.com) or [Visual Studio 2017](https://www.visualstudio.com/). VS Code is free / cross-platform and would be easy to use for this app.
+* For an IDE, you'll want to consider [VS Code](https://code.visualstudio.com) or [Visual Studio 2017](https://www.visualstudio.com/). VS Code is free / cross-platform and would be sufficient to use for this app.
 
 ### Building the Project
 
