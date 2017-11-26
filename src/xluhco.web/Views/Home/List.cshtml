@@ -28,7 +28,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
+                    <td><span class="icon">
+                        <i class="fa fa-clipboard"></i>
+                    </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
                     <td class="url"><a href="@item.URL">@item.URL</a></td>
                 </tr>
             }
