@@ -8,13 +8,6 @@ namespace xluhco.web
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.Seq("http://localhost:5341")
-                .Enrich.WithProperty("ApplicationName", "xluhco")
-                .CreateLogger();
             BuildWebHost(args).Run();
         }
 
@@ -22,6 +15,7 @@ namespace xluhco.web
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
+                .UseSerilog()
                 .Build();
     }
 }

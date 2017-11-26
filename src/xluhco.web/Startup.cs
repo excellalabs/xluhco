@@ -22,13 +22,27 @@ namespace xluhco.web
 
         public IConfiguration Configuration { get; }
 
+        public static Serilog.ILogger WireUpLogging()
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Seq("http://localhost:5341")
+                .Enrich.WithProperty("ApplicationName", "xluhco")
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            return Log.Logger;
+
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton(x => Log.Logger);
-            services.AddSingleton<ShortLinkFromCsvRepository>();
-            services.AddSingleton<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
+            services.AddScoped(ctx => WireUpLogging());
+            services.AddScoped<ShortLinkFromCsvRepository>();
+            services.AddScoped<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
             {
                 var repoService = ctx.GetRequiredService<ShortLinkFromCsvRepository>();
                 var logger = ctx.GetRequiredService<Serilog.ILogger>();
