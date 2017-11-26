@@ -6,7 +6,7 @@ A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
 ## Adapting xluh.co for Your Own Domain Name
 
-See the [Adapting.md](Adapting.md) guide for advice on how to use this project to host your own URL shortener at your own domain. 
+See the [Adapting.md](Adapting.md) guide for advice on how to use this project to host your own URL shortener at your own domain.
 
 ## Contributing to This Project
 
