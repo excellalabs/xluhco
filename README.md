@@ -20,7 +20,7 @@ Check out the [Contributing.md](Contributing.md) document for guidelines on how 
 * Google Analytics, written into the page from the server side response, that includes tracking links.
 * An automatic redirect using a callback from the Google Analytics event posting.
 
-Would you like us to expound more on any of these explanations? Please [submit an issue](http://github.com/excellalabs/xluhco/issues/new) and we'll be happy to answer the question!
+Would you like us to expound more on any of these explanations? Please [submit an issue](http://github.com/excellalabs/xluhco/issues/new) with your question and we'll be happy to answer it!
 
 ## Lessons We've Learned So Far
 
