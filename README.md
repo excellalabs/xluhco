@@ -35,6 +35,8 @@ You can also run using the commands in the IDE.
 * Google Analytics, written into the page from the server side response, that includes tracking links.
 * An automatic redirect using a callback from the Google Analytics event posting.
 
+Would you like us to expound more on any of these explanations? Simply [submit an issue](http://github.com/excellalabs/xluhco/issues/new) and we'll be happy to answer the question! 
+
 ## Lessons We've Learned So Far
 
 * Originally, we used IIS URL rewriting to redirect everything to the `RedirectController` and returned server-side 302 redirects. This worked fine and was really fast, but didn't afford us the ability to capture all of the analytics information we needed (server-side analytics experience just simply isn't as rich). So, we went back to loading a page with Google Analytics injected.
