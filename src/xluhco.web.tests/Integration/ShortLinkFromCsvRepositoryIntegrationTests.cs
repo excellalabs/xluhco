@@ -12,7 +12,7 @@ namespace xluhco.web.tests.Integration
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var hostingEnv = (IHostingEnvironment)server.Host.Services.GetService(typeof(IHostingEnvironment));
-            this._webRootPath = hostingEnv.WebRootPath;
+            _webRootPath = hostingEnv.WebRootPath;
         }
 
         [Fact]
