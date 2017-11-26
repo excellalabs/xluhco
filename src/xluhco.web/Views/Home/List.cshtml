@@ -19,31 +19,36 @@
     <input class="search" placeholder="Search" />
     <table class="table is-striped">
         <thead>
-            <tr>
-                <td>Short Code</td>
-                <td>URL</td>
-            </tr>
+        <tr>
+            <td>Short Code</td>
+            <td>URL</td>
+        </tr>
         </thead>
         <tbody class="list">
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td><span class="icon btn-clipboard" title="Copy" data-clipboard-target="#url-@item.ShortLinkCode">
-                        <i class="fa fa-clipboard"></i>
-                    </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
-                    <td class="url"><a href="@item.URL" id="url-@item.ShortLinkCode">@item.URL</a></td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span class="icon btn-clipboard" title="Copy" data-clipboard-target="#url-@item.ShortLinkCode">
+                    <i class="fa fa-clipboard"></i>
+                </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
+                <td class="url"><a href="@item.URL" id="url-@item.ShortLinkCode">@item.URL</a></td>
+            </tr>
+        }
 
         </tbody>
     </table>
 </div>
 
+@section BeforeEndOfHead {
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+}
+
 @section ScriptBeforeEndOfBody {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@beta/dist/tippy.all.min.js"></script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="//unpkg.com/tippy.js@beta/dist/tippy.all.min.js"></script>
     <!-- List.js configuration-->
     <script>
         var options = {
@@ -58,6 +63,7 @@
         var clipboard = new Clipboard('.btn-clipboard');
 
         clipboard.on('success', function(e) {
+            toastr.success('URL copied to clipboard.', 'Copied!');
             e.clearSelection();
         });
     </script>
