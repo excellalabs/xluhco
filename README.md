@@ -4,6 +4,14 @@ A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/n2268tskumo12j57?svg=true)](https://ci.appveyor.com/project/SeanKilleen/xluhco)
 
+## Would You like to Adapt this project for your own domain name?
+
+See the [Adapting.md](Adapting.md) guide for advice on how to use this project to host your own URL shortener at your own domain. 
+
+## Looking to Contribute?
+
+Check out the [Contributing.md](Contributing.md) document for guidelines on how to build the project, submit PRs, etc.
+
 ## How to Build This Project
 
 ### Prerequisites
