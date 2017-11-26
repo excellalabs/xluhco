@@ -28,7 +28,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><span class="icon btn-clipboard" data-clipboard-target="#url-@item.ShortLinkCode">
+                    <td><span class="icon btn-clipboard" title="Copy" data-clipboard-target="#url-@item.ShortLinkCode">
                         <i class="fa fa-clipboard"></i>
                     </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
                     <td class="url"><a href="@item.URL" id="url-@item.ShortLinkCode">@item.URL</a></td>
@@ -42,6 +42,7 @@
 @section ScriptBeforeEndOfBody {
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@beta/dist/tippy.all.min.js"></script>
 
     <!-- List.js configuration-->
     <script>
@@ -59,6 +60,8 @@
         clipboard.on('success', function(e) {
             e.clearSelection();
         });
-
+    </script>
+    <script>
+        tippy('.btn-clipboard');
     </script>
 }
