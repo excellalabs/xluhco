@@ -41,6 +41,9 @@
 
 @section ScriptBeforeEndOfBody {
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+
+    <!-- List.js configuration-->
     <script>
         var options = {
             valueNames: [ 'shortlink', 'url' ]
@@ -48,4 +51,5 @@
 
         var userList = new List('shortlinks', options);
     </script>
+    <!-- end List.js configuration-->
 }
