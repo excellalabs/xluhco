@@ -55,5 +55,10 @@
     <!-- clipboard.js configuration -->
     <script>
         var clipboard = new Clipboard('.btn-clipboard');
+
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+        });
+
     </script>
 }
