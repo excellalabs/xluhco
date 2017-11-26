@@ -28,10 +28,10 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td><span class="icon">
+                    <td><span class="icon btn-clipboard" data-clipboard-target="#url-@item.ShortLinkCode">
                         <i class="fa fa-clipboard"></i>
                     </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
-                    <td class="url"><a href="@item.URL">@item.URL</a></td>
+                    <td class="url"><a href="@item.URL" id="url-@item.ShortLinkCode">@item.URL</a></td>
                 </tr>
             }
 
@@ -52,4 +52,8 @@
         var userList = new List('shortlinks', options);
     </script>
     <!-- end List.js configuration-->
+    <!-- clipboard.js configuration -->
+    <script>
+        var clipboard = new Clipboard('.btn-clipboard');
+    </script>
 }
