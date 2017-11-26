@@ -35,7 +35,7 @@ You can also run using the commands in the IDE.
 * Google Analytics, written into the page from the server side response, that includes tracking links.
 * An automatic redirect using a callback from the Google Analytics event posting.
 
-Would you like us to expound more on any of these explanations? Simply [submit an issue](http://github.com/excellalabs/xluhco/issues/new) and we'll be happy to answer the question! 
+Would you like us to expound more on any of these explanations? Simply [submit an issue](http://github.com/excellalabs/xluhco/issues/new) and we'll be happy to answer the question!
 
 ## Lessons We've Learned So Far
 
