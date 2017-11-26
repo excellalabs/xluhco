@@ -1,3 +1,33 @@
 # How to Adapt this Project
 
-Coming soon.
+## Step 1: Fork or Clone this Repository
+
+TODO
+
+## Step 2: Set up a Google Analytics Account
+
+TODO
+
+## Step 3: Modify the Settings
+
+### `appsettings.json` files
+
+In the `src/xluhco.web` directory, you'll find a file called `appsettings.json`.
+
+In this file, you'll want to update:
+
+* `TrackingPropertyId`: Update this with the tracking property that you got when you created the Google Analytics for your site. If you leave it set to the default, we'll receive all of your hits and it will confuse us. :)
+* `ShortLinkUrl`: This is whatever URL you've chosen to host your link shortener at. It will prefix all of your short links throughout the app, show up in the title bar and on the home page, etc.
+* `CompanyName`: The name of your company. Shows up on the home page, etc.
+* `CompanyHomePageUrl`: Your company's web site. This link shows up on the home page.
+* `InstrumentationKey`: If you choose to use AppInsights, you'll want to replace this with your own key so it isn't confused with ours.
+
+## Step 4: Set up Continuous Integration
+
+This application uses Appveyor out of the box. We supply an `appveyor.yml` file that should have all of the settings & steps necessary to create a CI build from your source code for every one of your own changes. This ensures you'll know the app works if you make any other changes to it.
+
+## Step 5: Set up a Deployment Pipeline
+
+In the case of the live `xluh.co` domain, we use an Azure Web Site set up to automatically deploy from our master branch. Step by step instructions on that are below.
+
+TODO
