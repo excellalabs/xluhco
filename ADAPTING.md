@@ -37,10 +37,10 @@ If you sign up for Appveyor and point it to your cloned repository, the `appveyo
 
 ## Step 5: Set up a Deployment Pipeline
 
-In the case of the live `xluh.co` domain, we use an Azure Web Site set up to automatically deploy from our master branch. You can do this by:
+In the case of the live `xluh.co` domain, we use an Azure Web Site set up to automatically deploy from our master branch. You can do this via the steps below.
 
-* Logging into Azure. Create a subscription if you haven't already
-* Creating a new .NET Core web site (if you haven't already)
+* Log into Azure. Create a subscription if you haven't already
+* Create a new .NET Core web site (if you haven't already)
 * Once the site is created, select "deployments" from the menu.
 * Select GitHub as the source of the deployment.
 * Supply your credentials and select your repository 
