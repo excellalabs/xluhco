@@ -45,6 +45,7 @@ We'll try to avoid being super strict about accepting PRs because we value contr
 * Move to the `src` directory
 * Run `dotnet restore` to restore all of the packages
 * Run `dotnet build` to build the solution
+* Run `dotnet test` to run the unit tests. This will also build the project.
 
 You can also build using the commands in the IDE.
 
@@ -52,5 +53,6 @@ You can also build using the commands in the IDE.
 
 * Move to the `xluhco.Web` directory
 * Run `dotnet run` or `dotnet watch run` to run the project on a local web server.
+* You can also use `dotnet watch test` if you want to see the tests run whenever there are changes.
 
 You can also run using the commands in the IDE.
