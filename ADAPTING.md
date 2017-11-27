@@ -2,7 +2,12 @@
 
 ## Step 1: Fork or Clone this Repository
 
-TODO
+You'll want a copy of this repository so that you can edit it and adapt it for your needs. This can be done by either:
+
+* Forking the repository to your own organization / account
+* Downloading a copy of this source code and then uploading it to your account.
+
+Forking will allow you to receive upstream updates, but over time those updates may conflict with the changes you plan to make on your own.
 
 ## Step 2: Set up a Google Analytics Account
 
