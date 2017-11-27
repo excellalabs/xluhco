@@ -25,3 +25,12 @@ Would you like us to expound more on any of these explanations? Please [submit a
 ## Lessons We've Learned So Far
 
 * Originally, we used IIS URL rewriting to redirect everything to the `RedirectController` and returned server-side 302 redirects. This worked fine and was really fast, but didn't afford us the ability to capture all of the analytics information we needed (server-side analytics experience just simply isn't as rich). So, we went back to loading a page with Google Analytics injected.
+
+## Acknowledgements
+
+We stand on the shoulders of giants, and would like to thank the following libraries for helping this project exist:
+
+* .NET Core -- Microsoft's newest edition of the .NET framework enables a lot of cross-platform potential, and it's been a joy to work with here.
+* xUnit.NET -- A fantastic unit testing framework that is ready to go right out of the box for .NET Core development.
+* FluentAssertions -- This great assertions library helps our tests read better and produces great failure messages.
+* [CsvHelper](https://joshclose.github.io/CsvHelper/) is a great easy utility for parsing CSV files.
