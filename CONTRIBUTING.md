@@ -15,7 +15,7 @@ We'll do our best to work with you and help you, whatever the issue is. For the 
 
 That's great! We love to hear feedback on how we can improve things.
 
-Please know, however, that we may not be able to immediately implement your ideas or suggestions, however great they may be. OSS work is sometimes limited by time and other constraints.
+Please know, however, that we may not be able to immediately implement your ideas or suggestions. OSS work is sometimes limited by time and other constraints.
 
 We suggest [submitting an issue](http://github.com/excellalabs/xluhco/issues/new) with the idea or improvement so that we can discuss it first. At that point, assuming we agree it's a good fit, we will attempt to implement it, or guide you to help you do so within your own pull request(s).
 
