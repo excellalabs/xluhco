@@ -2,7 +2,13 @@
 
 ## How to Submit an Issue
 
-TODO
+Please submit an issue on our Github issues page at <http://github.com/excellalabs/xluhco/issues/new>.
+
+We'll do our best to work with you and help you, whatever the issue is. For the best possible results:
+
+* Try to make your issue as specific as possible
+* Provide steps you can take to reproduce the issue
+* Tell us what your expectation was of what *should* happen, as well as what *actually* happened. Lots of issues can be resolved by understanding a user's expectations.
 
 ## How to Submit a Pull Request
 
