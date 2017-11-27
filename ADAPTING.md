@@ -11,7 +11,9 @@ Forking will allow you to receive upstream updates, but over time those updates 
 
 ## Step 2: Set up a Google Analytics Account
 
-TODO
+This site is designed to work with [Google Analytics](https://www.google.com/analytics), so if you set up a GA account, you'll be able to track all of the hits and origins of those who are using your short links. It's also possible to check which links people are looking for that aren't found, etc. in order to gain more insight.
+
+Once you sign up for Google Analytics, you'll want to [setup a tracking property](https://support.google.com/analytics/answer/1042508?hl=en).
 
 ## Step 3: Modify the Settings
 
