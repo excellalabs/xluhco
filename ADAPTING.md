@@ -1,5 +1,7 @@
 # How to Adapt this Project
 
+If you find the below instructions confusing or unhelpful in any way, please [let us know by opening an issue](http://github.com/excellalabs/xluhco/issues/new). We'd be happy to help you work through the instructions to make use of this project!
+
 ## Step 1: Fork or Clone this Repository
 
 You'll want a copy of this repository so that you can edit it and adapt it for your needs. This can be done by either:
