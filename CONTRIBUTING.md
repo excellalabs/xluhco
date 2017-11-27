@@ -11,7 +11,7 @@ We'll do our best to work with you and help you, whatever the issue is. For the 
 * Tell us what your expectation was of what *should* happen, as well as what *actually* happened. Lots of issues can be resolved by understanding a user's expectations.
 * If you're a coder and you can provide a failing unit test, this would be perfect. :) But we know not everyone's a coder, and we'll help you regardless of what you're able to provide. 
 
-## Have an Idea / Request for improvement?
+## Have an Idea / Request for Improvement?
 
 That's great! We love to hear feedback on how we can improve things.
 
