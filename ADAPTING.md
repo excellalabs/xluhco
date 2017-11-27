@@ -47,3 +47,7 @@ In the case of the live `xluh.co` domain, we use an Azure Web Site set up to aut
 * Select to deploy from the master branch
 
 After this, you'll have a web site that deploys automatically, and a CI process that protects your code before it makes it to the master branch. Not bad!
+
+## Step 6: Update the docs (Optional)
+
+The URLs in this document are not relative -- so the "submit an issue" links, etc. will always point to the <http://github.com/excellalbas/xluhco> repository, even after you fork them. You may wish to edit these markdown files in your repository to update them with your project's URL instead.
