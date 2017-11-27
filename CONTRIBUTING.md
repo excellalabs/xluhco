@@ -10,6 +10,10 @@ We'll do our best to work with you and help you, whatever the issue is. For the 
 * Provide steps you can take to reproduce the issue
 * Tell us what your expectation was of what *should* happen, as well as what *actually* happened. Lots of issues can be resolved by understanding a user's expectations.
 
+## Have an Idea / Request for improvement?
+
+TODO
+empt
 ## How to Submit a Pull Request
 
 TODO
