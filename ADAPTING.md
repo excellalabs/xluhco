@@ -17,8 +17,6 @@ Once you sign up for Google Analytics, you'll want to [setup a tracking property
 
 ## Step 3: Modify the Settings
 
-### `appsettings.json` files
-
 In the `src/xluhco.web` directory, you'll find a file called `appsettings.json`.
 
 In this file, you'll want to update:
