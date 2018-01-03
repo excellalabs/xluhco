@@ -30,7 +30,7 @@
         function redirectToUrl() {
             if (!alreadyRedirected) {
                 alreadyRedirected = true;
-                window.location.assign("@Model.Url");
+                window.location.assign("@Html.Raw(Model.Url)");
             }
         };
 
