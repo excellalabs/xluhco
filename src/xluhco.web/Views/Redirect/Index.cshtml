@@ -37,7 +37,7 @@
         gtag('config', '@Model.TrackingCode');
         gtag('event', 'shortLinkView', {
             'shortLinkCode': '@Model.ShortLinkCode',
-            'shortLinkUrl': '@Model.Url',
+            'shortLinkUrl': '@Html.Raw(Model.Url)',
             'event_callback': function() {
                 redirectToUrl();
             }
