@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>xluh.co -- Redirecting to @Model.Url</title>
+    <title>xluh.co -- Redirecting to @Html.Raw(Model.Url)</title>
 
     <meta name="description" content="xluhco is a URL shortener for Excella (xluh.co, Excella Co, get it?)">
     <meta name="author" content="Sean Killeen">
@@ -30,14 +30,14 @@
         function redirectToUrl() {
             if (!alreadyRedirected) {
                 alreadyRedirected = true;
-                window.location.assign("@Model.Url");
+                window.location.assign("@Html.Raw(Model.Url)");
             }
         };
 
         gtag('config', '@Model.TrackingCode');
         gtag('event', 'shortLinkView', {
             'shortLinkCode': '@Model.ShortLinkCode',
-            'shortLinkUrl': '@Model.Url',
+            'shortLinkUrl': '@Html.Raw(Model.Url)',
             'event_callback': function() {
                 redirectToUrl();
             }
@@ -45,6 +45,6 @@
     </script>
 
     <h2>Short Code @Model.ShortLinkCode</h2>
-    <p>Redirecting to @Model.Url</p>
+    <p>Redirecting to @Html.Raw(Model.Url)</p>
 </body>
 </html>

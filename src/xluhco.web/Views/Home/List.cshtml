@@ -31,7 +31,7 @@
                 <td><span class="icon btn-clipboard" title="Copy" data-clipboard-target="#url-@item.ShortLinkCode">
                     <i class="fa fa-clipboard"></i>
                 </span> @shortLinkUrl/<span class="shortlink">@item.ShortLinkCode</span></td>
-                <td class="url"><a href="@item.URL" id="url-@item.ShortLinkCode">@item.URL</a></td>
+                <td class="url"><a href="@Html.Raw(item.URL)" id="url-@item.ShortLinkCode">@item.URL</a></td>
             </tr>
         }
 
