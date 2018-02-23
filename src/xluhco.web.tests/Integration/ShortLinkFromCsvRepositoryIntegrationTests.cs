@@ -47,5 +47,17 @@ namespace xluhco.web.tests.Integration
                 act.ShouldNotThrow();
             }
         }
+
+        [Fact]
+        public void NoDuplicateURLs()
+        {
+            var shortLinkCodes = _sut.GetShortLinks().Select(x => x.ShortLinkCode).ToList();
+
+            var duplicateCodes = shortLinkCodes.GroupBy(x => x)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key);
+
+            duplicateCodes.Should().BeEmpty();
+        }
     }
 }
