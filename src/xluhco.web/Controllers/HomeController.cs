@@ -15,11 +15,13 @@ namespace xluhco.web.Controllers
             _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         }
 
+        [ResponseCache(Duration = int.MaxValue)]
         public IActionResult Index()
         {
             return View("Index");
         }
 
+        [ResponseCache(Duration = int.MaxValue)]
         public IActionResult List()
         {
             var orderedLinks = _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
