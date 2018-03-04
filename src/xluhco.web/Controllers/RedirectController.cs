@@ -21,6 +21,7 @@ namespace xluhco.web.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = int.MaxValue)]
         public IActionResult Index(string shortCode)
         {
             _logger.Debug("Entered the redirect for short code {shortCode}", shortCode);
