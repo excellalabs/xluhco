@@ -89,3 +89,4 @@ room,https://app.teem.com/booking/#/search?type=room
 rooms,https://app.teem.com/booking/#/search?type=room
 desk,https://app.teem.com/booking/#/index/search?type=desk
 desks,https://app.teem.com/booking/#/index/search?type=desk
+sso,https://console.jumpcloud.com/
