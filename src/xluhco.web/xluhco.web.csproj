@@ -4,6 +4,9 @@
     <ApplicationInsightsResourceId>/subscriptions/8562adbc-78cd-4694-9dc5-1d1f2d2cf915/resourcegroups/xluhco/providers/microsoft.insights/components/xluhco</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/8562adbc-78cd-4694-9dc5-1d1f2d2cf915/resourceGroups/xluhco/providers/microsoft.insights/components/xluhco</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
