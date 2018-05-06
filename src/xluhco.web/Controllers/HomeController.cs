@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using xluhco.web.Repositories;
 
@@ -22,6 +23,7 @@ namespace xluhco.web.Controllers
         }
 
         [ResponseCache(Duration = int.MaxValue)]
+        [Authorize]
         public IActionResult List()
         {
             var orderedLinks = _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
