@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +54,16 @@ namespace xluhco.web
                 options.Authority = options.Authority + "/v2.0/";
 
                 options.TokenValidationParameters.ValidateIssuer = true; // Enforces that it checks for our specific domain
+                options.Events = new OpenIdConnectEvents()
+                {
+                    OnTicketReceived = (context) =>
+                    {
+                        context.Properties.IsPersistent = true;
+                        context.Properties.ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1);
+
+                        return Task.FromResult(0);
+                    }
+                };
             });
 
             services.AddMvc();
