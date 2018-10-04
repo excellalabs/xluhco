@@ -43,7 +43,7 @@ namespace xluhco.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddResponseCaching();
-
+            services.AddMemoryCache();
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
 
