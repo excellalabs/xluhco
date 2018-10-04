@@ -1,10 +1,20 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using xluhco.web.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace xluhco.web
 {
@@ -53,6 +63,12 @@ namespace xluhco.web
             services.Configure<RedirectOptions>(Configuration);
             services.Configure<GoogleAnalyticsOptions>(Configuration);
             services.Configure<SiteOptions>(Configuration);
+            services.AddAuthentication(sharedOptions =>
+                {
+                    sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                })
+                .AddAzureAd(options => Configuration.Bind("AzureAd", options));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
