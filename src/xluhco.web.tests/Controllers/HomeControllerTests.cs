@@ -14,13 +14,17 @@ namespace xluhco.web.tests.Controllers
     public class HomeControllerTests
     {
         private readonly Mock<IShortLinkRepository> _mockRepo;
+        private readonly Mock<ICacheEntry> _mockCacheEntry;
         private readonly Mock<IMemoryCache> _mockMemoryCache;
         private readonly HomeController _sut;
 
         public HomeControllerTests()
         {
             _mockRepo = new Mock<IShortLinkRepository>();
+            _mockCacheEntry = new Mock<ICacheEntry>();
             _mockMemoryCache = new Mock<IMemoryCache>();
+            _mockMemoryCache.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(_mockCacheEntry.Object);
+
             _sut = new HomeController(_mockRepo.Object, _mockMemoryCache.Object);
         }
 
@@ -91,12 +95,13 @@ namespace xluhco.web.tests.Controllers
         [Fact]
         public void List_MultipleItems_ReturnsItemsSortedByShortCode()
         {
-            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>()
-            {
-                new ShortLinkItem("ghi", "http://seankilleen.com"),
-                new ShortLinkItem("def", "http://seankilleen.com"),
-                new ShortLinkItem("abc", "http://seankilleen.com")
-            });
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(
+                new List<ShortLinkItem>()
+                {
+                    new ShortLinkItem("ghi", "http://SeanKilleen.com"),
+                    new ShortLinkItem("def", "http://SeanKilleen.com"),
+                    new ShortLinkItem("abc", "http://SeanKilleen.com")
+                });
 
             var result = _sut.List();
 
