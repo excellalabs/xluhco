@@ -1,9 +1,22 @@
-﻿@using Microsoft.Extensions.Options
+﻿
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Http
+@using Microsoft.Extensions.Options
 @using xluhco.web
 @inject IOptions<SiteOptions> SiteOptions
+@inject IHttpContextAccessor ContextAccessor
 @model List<xluhco.web.ShortLinkItem>
 @{
-    ViewBag.Title = "All the links";
+    var isLoggedIn = ContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+    if (isLoggedIn)
+    {
+        var username = ContextAccessor.HttpContext.User.FindFirst("preferred_username").Value;
+        ViewBag.Title = "All the links | " + username;
+    }
+    else
+    {
+        ViewBag.Title = "All the links";
+    }
     Layout = "~/Views/Shared/_layout.cshtml";
 
     var shortLinkUrl = SiteOptions.Value.ShortLinkUrl;
