@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using xluhco.web.Repositories;
 
@@ -21,6 +22,7 @@ namespace xluhco.web.Controllers
             return View("Index");
         }
 
+        [Authorize]
         [ResponseCache(Duration = int.MaxValue)]
         public IActionResult List()
         {
