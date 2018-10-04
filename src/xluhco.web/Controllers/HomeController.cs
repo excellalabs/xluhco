@@ -28,9 +28,12 @@ namespace xluhco.web.Controllers
         [Authorize]
        public IActionResult List()
         {
+            var orderedLinks = _memoryCache.GetOrCreate("allLinks", entry =>
+            {
+                entry.SlidingExpiration = TimeSpan.MaxValue;
+                return _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
+            });
 
-            var orderedLinks = 
-                _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
             return View("List", orderedLinks);
         }
     }
