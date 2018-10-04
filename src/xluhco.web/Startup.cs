@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using xluhco.web.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 
 namespace xluhco.web
 {
@@ -40,6 +43,17 @@ namespace xluhco.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddResponseCaching();
+
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+
+            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
+            {
+                options.Authority = options.Authority + "/v2.0/";
+
+                options.TokenValidationParameters.ValidateIssuer = true; // Enforces that it checks for our specific domain
+            });
+
             services.AddMvc();
             services.AddScoped(ctx => WireUpLogging());
             services.AddScoped<ShortLinkFromCsvRepository>();
@@ -64,6 +78,7 @@ namespace xluhco.web
             }
 
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
