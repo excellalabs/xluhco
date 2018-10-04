@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using xluhco.web.Controllers;
 using xluhco.web.Repositories;
@@ -13,19 +14,21 @@ namespace xluhco.web.tests.Controllers
     public class HomeControllerTests
     {
         private readonly Mock<IShortLinkRepository> _mockRepo;
+        private readonly Mock<IMemoryCache> _mockMemoryCache;
         private readonly HomeController _sut;
 
         public HomeControllerTests()
         {
             _mockRepo = new Mock<IShortLinkRepository>();
-            _sut = new HomeController(_mockRepo.Object);
+            _mockMemoryCache = new Mock<IMemoryCache>();
+            _sut = new HomeController(_mockRepo.Object, _mockMemoryCache.Object);
         }
 
         [Fact]
         public void Ctor_NullRepository_ThrowsError()
         {
             // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new HomeController(null);
+            Action act = () => new HomeController(null, _mockMemoryCache.Object);
 
             act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
         }
