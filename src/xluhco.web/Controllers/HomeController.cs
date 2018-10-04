@@ -23,8 +23,7 @@ namespace xluhco.web.Controllers
         }
 
         [Authorize]
-        [ResponseCache(Duration = int.MaxValue)]
-        public IActionResult List()
+       public IActionResult List()
         {
             var orderedLinks = _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
             return View("List", orderedLinks);
