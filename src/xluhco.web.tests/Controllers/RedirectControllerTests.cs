@@ -270,6 +270,9 @@ namespace xluhco.web.tests.Controllers
                 model.ShortLinkCode.Should().Be(testShortCode);
                 model.NumberOfSecondsToWait.Should().Be(testSecondsToWait);
                 model.TrackingCode.Should().Be(testGaCode);
+                model.ImageUrl.Should().Be(testImageUrl);
+                model.Title.Should().Be(testTitle);
+                model.Description.Should().Be(testDescription);
                 model.Url.Should().Be(testUrl);
             }
         }
