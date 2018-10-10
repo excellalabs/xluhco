@@ -10,6 +10,28 @@
 
     <meta name="description" content="xluhco is a URL shortener for Excella (xluh.co, Excella Co, get it?)">
     <meta name="author" content="Sean Killeen">
+
+    @*Social media tags*@
+    @if(!string.IsNullOrEmpty(Model.Title))
+    {
+        <meta property="og:title" content="@Html.Raw(Model.Title)">
+        <meta name="twitter:title" content="@Html.Raw(Model.Title)">
+    }
+    
+    @if(!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <meta property="og:type" content="Website">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="@Html.Raw(Model.ImageUrl)">
+        <meta property="og:image" content="@Html.Raw(Model.ImageUrl)">
+    }
+    
+    @if(!string.IsNullOrEmpty(Model.Description))
+    {
+        <meta property="og:description" content="@Html.Raw(Model.Description)">
+    }
+    <meta property="og:url" content="@Html.Raw(Model.Url)">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=@Model.TrackingCode"></script>
 </head>
 <body>
