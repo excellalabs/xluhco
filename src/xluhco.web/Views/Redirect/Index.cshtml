@@ -12,13 +12,13 @@
     <meta name="author" content="Sean Killeen">
 
     @*Social media tags*@
-    @if(!string.IsNullOrEmpty(Model.Title))
+    @if(!string.IsNullOrWhiteSpace(Model.Title))
     {
         <meta property="og:title" content="@Html.Raw(Model.Title)">
         <meta name="twitter:title" content="@Html.Raw(Model.Title)">
     }
     
-    @if(!string.IsNullOrEmpty(Model.ImageUrl))
+    @if(!string.IsNullOrWhiteSpace(Model.ImageUrl))
     {
         <meta property="og:type" content="Website">
         <meta name="twitter:card" content="summary_large_image">
@@ -26,7 +26,7 @@
         <meta property="og:image" content="@Html.Raw(Model.ImageUrl)">
     }
     
-    @if(!string.IsNullOrEmpty(Model.Description))
+    @if(!string.IsNullOrWhiteSpace(Model.Description))
     {
         <meta property="og:description" content="@Html.Raw(Model.Description)">
     }
