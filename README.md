@@ -24,7 +24,7 @@ Would you like us to expound more on any of these explanations? Please [submit a
 
 ## How to include custom text and images when sharing shortened URLs in social media
 
-The .cvs file contains 3 optional columns for each URL: imageURL, title and description. 
+The .csv file contains 3 optional columns for each URL: `imageURL`, `title` and `description`. 
 * When sharing a shortened URL on social media, the social media site may use the information provided on these columns to display a preview of your target site.
 * xluh.co reads the information on these columns and uses it to populate meta tags on its intermediate redirect page. These may be crawled by social media sites at the time of sharing.
 * For more information please visit [https://www.addtoany.com/ext/meta-tags](https://www.addtoany.com/ext/meta-tags)
