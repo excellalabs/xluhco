@@ -34,7 +34,7 @@ namespace xluhco.web.Controllers
             }
 
             _logger.Information("Redirecting {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", redirectItem.ShortLinkCode, redirectItem.URL, _gaOptions.TrackingPropertyId);
-            var viewModel = new RedirectViewModel(_gaOptions.TrackingPropertyId, _redirectOptions.SecondsToWaitForAnalytics, shortCode, redirectItem.URL);
+            var viewModel = new RedirectViewModel(_gaOptions.TrackingPropertyId, _redirectOptions.SecondsToWaitForAnalytics, redirectItem);
 
             return View("Index", viewModel);
         }
