@@ -237,16 +237,14 @@ namespace xluhco.web.tests.Controllers
                 viewResult.ViewName.Should().Be("Index");
             }
 
-            [Fact]
-            public void UrlFound_PopulatesViewModelCorrectly()
+            [Theory]
+            [InlineData("sk", "http://SeanKilleen.com", "12345", 3, null, null, null)]
+            [InlineData("sk", "http://SeanKilleen.com", "12345", 3, "http://images.com/test.jpg", "Test Title", "Test Description")]
+            public void UrlFound_PopulatesViewModelCorrectly(string testShortCode, string testUrl, string testGaCode,
+                int testSecondsToWait, string testImageUrl, string testTitle, string testDescription)
             {
-                var testShortCode = "sk";
-                var testUrl = "http://SeanKilleen.com";
-                var testGaCode = "12345";
-                var testSecondsToWait = 3;
-
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
-                    .Returns(new ShortLinkItem(testShortCode, testUrl));
+                    .Returns(new ShortLinkItem(testShortCode, testUrl, testImageUrl, testTitle, testDescription));
 
                 _mockGaOptions.Setup(x => x.Value)
                     .Returns(new GoogleAnalyticsOptions { TrackingPropertyId = testGaCode });
@@ -272,6 +270,9 @@ namespace xluhco.web.tests.Controllers
                 model.ShortLinkCode.Should().Be(testShortCode);
                 model.NumberOfSecondsToWait.Should().Be(testSecondsToWait);
                 model.TrackingCode.Should().Be(testGaCode);
+                model.ImageUrl.Should().Be(testImageUrl);
+                model.Title.Should().Be(testTitle);
+                model.Description.Should().Be(testDescription);
                 model.Url.Should().Be(testUrl);
             }
         }

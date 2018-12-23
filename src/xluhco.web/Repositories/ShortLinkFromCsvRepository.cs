@@ -32,6 +32,7 @@ namespace xluhco.web.Repositories
                 {
                     _logger.Information("Reading shortLinks from {filePath}", filePath);
                     var csv = new CsvReader(reader);
+                    csv.Configuration.MissingFieldFound = null;
                     var records = csv.GetRecords<ShortLinkItem>();
 
                     var shortLinks = records.ToList();
