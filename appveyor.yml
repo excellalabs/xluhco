@@ -24,7 +24,7 @@ before_build:
 
     dotnet restore
 build:
-  verbosity: detailed
+  verbosity: minimal
 deploy: off
 notifications:
 - provider: GitHubPullRequest
