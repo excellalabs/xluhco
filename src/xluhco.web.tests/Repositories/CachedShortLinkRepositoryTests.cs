@@ -19,7 +19,7 @@ namespace xluhco.web.tests.Repositories
             {
                 Action act = () => new CachedShortLinkRepository(null, Dummy.Of<IShortLinkRepository>());
 
-                act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("logger");
+                act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("logger");
             }
 
             [Fact]
@@ -27,7 +27,7 @@ namespace xluhco.web.tests.Repositories
             {
                 Action act = () => new CachedShortLinkRepository(Dummy.Of<ILogger>(), null);
 
-                act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
+                act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("repo");
             }
 
             [Fact]
@@ -37,7 +37,7 @@ namespace xluhco.web.tests.Repositories
                     Dummy.Of<ILogger>(), 
                     Dummy.Of<IShortLinkRepository>());
 
-                act.ShouldNotThrow();
+                act.Should().NotThrow();
             }
         }
 
