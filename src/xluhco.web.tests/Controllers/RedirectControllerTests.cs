@@ -24,7 +24,7 @@ namespace xluhco.web.tests.Controllers
                     Dummy.Of<IOptions<RedirectOptions>>(), 
                     Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("shortLinkRepo");
             }
 
@@ -37,7 +37,7 @@ namespace xluhco.web.tests.Controllers
                     Dummy.Of<IOptions<RedirectOptions>>(),
                     Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("logger");
             }
 
@@ -50,7 +50,7 @@ namespace xluhco.web.tests.Controllers
                     null,
                     Dummy.Of<IOptions<GoogleAnalyticsOptions>>());
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("redirectOptions");
             }
 
@@ -66,7 +66,7 @@ namespace xluhco.web.tests.Controllers
                     mockRedirectOptions.Object,
                     null);
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("redirectOptions");
             }
 
@@ -82,7 +82,7 @@ namespace xluhco.web.tests.Controllers
                     mockRedirectOptions.Object,
                     null);
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("gaOptions");
             }
 
@@ -101,7 +101,7 @@ namespace xluhco.web.tests.Controllers
                     mockRedirectOptions.Object,
                     mockAnalyticsOptions.Object);
 
-                act.ShouldThrow<ArgumentNullException>()
+                act.Should().Throw<ArgumentNullException>()
                     .And.ParamName.Should().Be("gaOptions");
             }
 
@@ -120,7 +120,7 @@ namespace xluhco.web.tests.Controllers
                     mockRedirectOptions.Object,
                     mockAnalyticsOptions.Object);
 
-                act.ShouldNotThrow();
+                act.Should().NotThrow();
             }
         }
 

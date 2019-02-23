@@ -44,7 +44,7 @@ namespace xluhco.web.tests.Integration
             {
                 // ReSharper disable once ObjectCreationAsStatement
                 Action act = () => new Uri(url, UriKind.Absolute);
-                act.ShouldNotThrow();
+                act.Should().NotThrow();
             }
         }
 
