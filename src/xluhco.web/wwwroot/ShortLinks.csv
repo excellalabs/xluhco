@@ -88,8 +88,8 @@ rooms,https://app.teem.com/booking/#/search?type=room
 desk,https://app.teem.com/booking/#/index/search?type=desk
 desks,https://app.teem.com/booking/#/index/search?type=desk
 sso,https://console.jumpcloud.com/
-jc,sso,https://console.jumpcloud.com/
-jumpcloud,sso,https://console.jumpcloud.com/
+jc,https://console.jumpcloud.com/
+jumpcloud,https://console.jumpcloud.com/
 adapting,https://github.com/excellalabs/xluhco/blob/master/ADAPTING.md
 makeitmine,https://github.com/excellalabs/xluhco/blob/master/ADAPTING.md
 solution-docs,https://excellaco.sharepoint.com/:f:/g/sacoe/sd/teamsite/EurQJ5C8Ut1LlAaHdUFuTewBsmVGWUX_VzSlXl9lr9j-XQ
