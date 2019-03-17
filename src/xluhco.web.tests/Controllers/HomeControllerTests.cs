@@ -34,7 +34,7 @@ namespace xluhco.web.tests.Controllers
             // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new HomeController(null, _mockMemoryCache.Object);
 
-            act.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("repo");
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("repo");
         }
 
         [Fact]
