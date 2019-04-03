@@ -31,20 +31,31 @@ In this file, you'll want to update:
 
 ## Step 4: Set up Continuous Integration
 
-This application uses Appveyor out of the box. We supply an `appveyor.yml` file that should have all of the settings & steps necessary to create a CI build from your source code for every one of your own changes. This ensures you'll know the app works if you make any other changes to it.
+This application uses [Azure DevOps Pipelines](https://dev.azure.com) out of the box. We supply an `azure-pipelines.yml` file that should have all of the settings & steps necessary to create a CI build from your source code for every one of your own changes. This ensures you'll know the app works if you make any other changes to it.
 
-If you sign up for Appveyor and point it to your cloned repository, the `appveyor.yml` file should take care of most of your work.
+If you sign up for Azure DevOps and point it to your cloned repository, the `azure-pipelines.yml` file should take care of most of your work.
 
 ## Step 5: Set up a Deployment Pipeline
 
-In the case of the live `xluh.co` domain, we use an Azure Web Site set up to automatically deploy from our master branch. You can do this via the steps below.
+In the case of the live `xluh.co` domain, we use an Azure Web Site and Azure DevOps Releases to automatically deploy from our master branch. You can do this via the steps below.
+
+### Creating the Site
 
 * Log into Azure. Create a subscription if you haven't already
 * Create a new .NET Core web site (if you haven't already)
-* Once the site is created, select "deployments" from the menu.
-* Select GitHub as the source of the deployment.
-* Supply your credentials and select your repository
-* Select to deploy from the master branch
+
+### Creating the Release
+
+* Log into [Azure DevOps](https://dev.azure.com)
+* Navigate to the project you created in the previous step for the build
+* Click Releases
+* Create a Release
+* Select the artifact from the build as the basis for the release
+* Filter the release to the `master` branch or the name of your main branch.
+* For the release task, select deploying to an Azure Web App
+* Select the web app you previously created
+* Ensure that the release is set to automatically kick off.
+* Save your changes
 
 After this, you'll have a web site that deploys automatically, and a CI process that protects your code before it makes it to the master branch. Not bad!
 
