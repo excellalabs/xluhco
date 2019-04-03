@@ -18,3 +18,8 @@ variables:
 steps:
 - script: dotnet test ./src/xluhco.sln --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'drop'
