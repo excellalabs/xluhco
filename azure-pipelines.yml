@@ -29,7 +29,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: test
-    projects: '**/*Tests/*.csproj'
+    projects: '**/*tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'    
 - script: dotnet test /src/xluhco.web.tests/xluhco.web.tests.csproj --logger trx --collect "Code coverage"
 - task: PublishTestResults@2
