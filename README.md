@@ -2,7 +2,7 @@
 
 A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/n2268tskumo12j57?svg=true)](https://ci.appveyor.com/project/SeanKilleen/xluhco)
+[![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=master)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=master)
 
 ## Adapting xluh.co for Your Own Domain Name
 
@@ -24,7 +24,8 @@ Would you like us to expound more on any of these explanations? Please [submit a
 
 ## How to include custom text and images when sharing shortened URLs in social media
 
-The .csv file contains 3 optional columns for each URL: `imageURL`, `title` and `description`. 
+The .csv file contains 3 optional columns for each URL: `imageURL`, `title` and `description`.
+
 * When sharing a shortened URL on social media, the social media site may use the information provided on these columns to display a preview of your target site.
 * xluh.co reads the information on these columns and uses it to populate meta tags on its intermediate redirect page. These may be crawled by social media sites at the time of sharing.
 * For more information please visit [https://www.addtoany.com/ext/meta-tags](https://www.addtoany.com/ext/meta-tags)
@@ -41,4 +42,4 @@ We stand on the shoulders of giants, and would like to thank the following libra
 * xUnit.NET -- A fantastic unit testing framework that is ready to go right out of the box for .NET Core development.
 * FluentAssertions -- This great assertions library helps our tests read better and produces great failure messages.
 * [CsvHelper](https://joshclose.github.io/CsvHelper/) is a great easy utility for parsing CSV files.
-* Appveyor has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `appveyor.yml` file makes it easy to port this CI to any forks of this project as well. 
+* Azure DevOps Pipelines has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `azure-pipelines.yml` file makes it easy to port this CI to any forks of this project as well.
