@@ -13,7 +13,5 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: cd src
-  displayName: Enter the source code directory
 - script: dotnet test --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'
