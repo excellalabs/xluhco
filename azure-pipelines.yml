@@ -20,9 +20,6 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: NuGet.config    # Relative to root of the repository
-    externalFeedCredentials: <Name of the NuGet service connection>
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
