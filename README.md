@@ -2,7 +2,7 @@
 
 A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/n2268tskumo12j57?svg=true)](https://ci.appveyor.com/project/SeanKilleen/xluhco)
+[![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=master)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=master)
 
 ## Adapting xluh.co for Your Own Domain Name
 
