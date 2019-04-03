@@ -42,4 +42,4 @@ We stand on the shoulders of giants, and would like to thank the following libra
 * xUnit.NET -- A fantastic unit testing framework that is ready to go right out of the box for .NET Core development.
 * FluentAssertions -- This great assertions library helps our tests read better and produces great failure messages.
 * [CsvHelper](https://joshclose.github.io/CsvHelper/) is a great easy utility for parsing CSV files.
-* Appveyor has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `appveyor.yml` file makes it easy to port this CI to any forks of this project as well. 
+* Azure DevOps Pipelines has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `azure-pipelines.yml` file makes it easy to port this CI to any forks of this project as well.
