@@ -32,9 +32,7 @@ steps:
   inputs:
     command: test
     projects: '**/*tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'    
-- script: dotnet test /src/xluhco.web.tests/xluhco.web.tests.csproj --logger trx --collect "Code coverage"
-  displayName: Run Unit Tests to collect code coverage
+    arguments: '--configuration $(buildConfiguration) --logger trx --collect "Code coverage"'    
 - task: PublishTestResults@2
   displayName: Publish Code Coverage Results
   inputs:
