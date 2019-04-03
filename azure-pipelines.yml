@@ -13,5 +13,5 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet test --configuration $(buildConfiguration)
+- script: dotnet test ./src/xluhco.sln --configuration $(buildConfiguration)
   displayName: 'dotnet test $(buildConfiguration)'
