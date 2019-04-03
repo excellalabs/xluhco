@@ -43,7 +43,7 @@ In the case of the live `xluh.co` domain, we use an Azure Web Site set up to aut
 * Create a new .NET Core web site (if you haven't already)
 * Once the site is created, select "deployments" from the menu.
 * Select GitHub as the source of the deployment.
-* Supply your credentials and select your repository 
+* Supply your credentials and select your repository
 * Select to deploy from the master branch
 
 After this, you'll have a web site that deploys automatically, and a CI process that protects your code before it makes it to the master branch. Not bad!
