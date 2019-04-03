@@ -42,6 +42,7 @@ steps:
     zipAfterPublish: True
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
 - task: PublishPipelineArtifact@0
+  displayName: Publish Pipeline Artifacts
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)
   condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
