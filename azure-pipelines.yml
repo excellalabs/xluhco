@@ -17,26 +17,31 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: Nuget Package Restore
   inputs:
     command: restore
     projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: Build Projects
   inputs:
     command: build
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'  
 - task: DotNetCoreCLI@2
+  displayName: Run Unit Tests
   inputs:
     command: test
     projects: '**/*tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'    
 - script: dotnet test /src/xluhco.web.tests/xluhco.web.tests.csproj --logger trx --collect "Code coverage"
+  displayName: Run Unit Tests to collect code coverage
 - task: PublishTestResults@2
+  displayName: Publish Code Coverage Results
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 - task: DotNetCoreCLI@2
+  displayName: Publish Artifacts
   inputs:
     command: publish
     publishWebProjects: True
