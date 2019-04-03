@@ -33,11 +33,6 @@ steps:
     command: test
     projects: '**/*tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --logger trx --collect "Code coverage"'    
-- task: PublishTestResults@2
-  displayName: Publish Code Coverage Results
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
 - task: DotNetCoreCLI@2
   displayName: Publish Artifacts
   inputs:
