@@ -32,7 +32,7 @@ steps:
   inputs:
     command: test
     projects: '**/*tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --logger trx --collect "Code coverage"'    
+    arguments: '--configuration $(buildConfiguration)'    
 - task: DotNetCoreCLI@2
   displayName: Publish Artifacts
   inputs:
