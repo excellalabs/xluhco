@@ -38,8 +38,8 @@ The .csv file contains 3 optional columns for each URL: `imageURL`, `title` and 
 
 We stand on the shoulders of giants, and would like to thank the following libraries for helping this project exist:
 
-* .NET Core -- Microsoft's newest edition of the .NET framework enables a lot of cross-platform potential, and it's been a joy to work with here.
-* xUnit.NET -- A fantastic unit testing framework that is ready to go right out of the box for .NET Core development.
-* FluentAssertions -- This great assertions library helps our tests read better and produces great failure messages.
+* [.NET Core](https://docs.microsoft.com/en-us/dotnet/core/) -- Microsoft's newest edition of the .NET framework enables a lot of cross-platform potential, and it's been a joy to work with here.
+* [xUnit.NET](http://xunit.net) -- A fantastic unit testing framework that is ready to go right out of the box for .NET Core development.
+* [FluentAssertions](https://fluentassertions.com/) -- This great assertions library helps our tests read better and produces great failure messages.
 * [CsvHelper](https://joshclose.github.io/CsvHelper/) is a great easy utility for parsing CSV files.
-* Azure DevOps Pipelines has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `azure-pipelines.yml` file makes it easy to port this CI to any forks of this project as well.
+* [Azure DevOps Pipelines](https://azure.microsoft.com/en-us/services/devops/) has been a great CI tool and tells us whenever something breaks, for free. They're super easy to get up and running with for .NET Core apps and the `azure-pipelines.yml` file makes it easy to port this CI to any forks of this project as well.
