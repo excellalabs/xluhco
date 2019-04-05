@@ -2,7 +2,11 @@
 
 A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
-[![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=master)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=master)
+Click the links below to view the current status. 
+
+| Build status  | Deployment status |
+| ------------- | ------------- |
+| [![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=master)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=master)  | [![Deployment Status](https://vsrm.dev.azure.com/excellaco/_apis/public/Release/badge/fe08bdf8-31f0-4c33-abb5-7869d3914fdb/1/1)](https://dev.azure.com/excellaco/xluhco/_release?definitionId=1)   |
 
 ## Adapting xluh.co for Your Own Domain Name
 
