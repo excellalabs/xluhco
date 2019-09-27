@@ -66,7 +66,7 @@ namespace xluhco.web
                 };
             });
 
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddScoped(ctx => WireUpLogging());
             services.AddScoped<ShortLinkFromCsvRepository>();
             services.AddScoped<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
