@@ -16,7 +16,7 @@ namespace xluhco.web.tests.Integration
         public ShortLinkFromCsvRepositoryIntegrationTests()
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
-            var hostingEnv = (IHostingEnvironment)server.Host.Services.GetService(typeof(IHostingEnvironment));
+            var hostingEnv = (IWebHostEnvironment)server.Host.Services.GetService(typeof(IWebHostEnvironment));
             _webRootPath = hostingEnv.WebRootPath;
             _sut = new ShortLinkFromCsvRepository(Dummy.Of<ILogger>(), hostingEnv);
         }

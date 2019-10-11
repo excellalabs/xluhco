@@ -11,9 +11,9 @@ namespace xluhco.web.Repositories
     public class ShortLinkFromCsvRepository : IShortLinkRepository
     {
         private readonly ILogger _logger;
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
 
-        public ShortLinkFromCsvRepository(ILogger logger, IHostingEnvironment env)
+        public ShortLinkFromCsvRepository(ILogger logger, IWebHostEnvironment env)
         {
             _logger = logger;
             _env = env;
