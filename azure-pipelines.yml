@@ -16,7 +16,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: DotNetCoreInstaller@0
+- task: DotNetCoreInstaller@2
   inputs:
     version: '3.0.100' # replace this value with the version that you need for your project
 - task: DotNetCoreCLI@2
