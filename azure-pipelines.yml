@@ -18,7 +18,7 @@ variables:
 steps:
 - task: DotNetCoreInstaller@2
   inputs:
-    version: '3.1.0' # replace this value with the version that you need for your project
+    version: '3.1.100' # replace this value with the version that you need for your project
 - task: DotNetCoreCLI@2
   displayName: Nuget Package Restore
   inputs:
