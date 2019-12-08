@@ -27,6 +27,8 @@ steps:
     dockerfile: $(dockerfilePath)
     containerRegistry: $(dockerRegistryServiceConnection)
     repository: $(containerRepositoryName)
+    tags: |
+      $(tag)
 - task: Docker@2
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   displayName: Push to registry (master branch only)
