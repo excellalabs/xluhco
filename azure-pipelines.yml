@@ -17,13 +17,21 @@ variables:
   dockerfilePath: 'src/Dockerfile'
   dockerRegistryServiceConnection: 'azure-container-reg'
   containerRepositoryName: 'xluhco'
-  tag: 'build'
+  tag: 'latest'
   
 steps:
 - task: Docker@2
-  displayName: Build and push an image to container registry
+  displayName: Build docker image
   inputs:
-    command: buildAndPush
+    command: build
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    repository: $(containerRepositoryName)
+- task: Docker@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: Push to container registry (master branch only)
+  inputs:
+    command: push
     dockerfile: $(dockerfilePath)
     containerRegistry: $(dockerRegistryServiceConnection)
     repository: $(containerRepositoryName)
