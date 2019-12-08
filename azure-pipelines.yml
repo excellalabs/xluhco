@@ -17,6 +17,7 @@ variables:
   dockerfilePath: 'src/Dockerfile'
   dockerRegistryServiceConnection: 'azure-container-reg'
   containerRepositoryName: 'xluhco'
+  tag: 'build'
   
 steps:
 - task: Docker@2
