@@ -52,7 +52,7 @@ namespace xluhco.web
 
             services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
             {
-                options.Authority = options.Authority + "/v2.0/";
+                options.Authority += "/v2.0/";
 
                 options.TokenValidationParameters.ValidateIssuer = true; // Enforces that it checks for our specific domain
                 options.Events = new OpenIdConnectEvents()
@@ -84,7 +84,7 @@ namespace xluhco.web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
