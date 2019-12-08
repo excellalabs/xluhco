@@ -27,19 +27,18 @@ namespace xluhco.web.Repositories
 
             try
             {
-                using (var fileStream = new FileStream(filePath, FileMode.Open))
-                using (var reader = new StreamReader(fileStream))
-                {
-                    _logger.Information("Reading shortLinks from {filePath}", filePath);
-                    var csv = new CsvReader(reader);
-                    csv.Configuration.MissingFieldFound = null;
-                    var records = csv.GetRecords<ShortLinkItem>();
+                using var fileStream = new FileStream(filePath, FileMode.Open);
+                using var reader = new StreamReader(fileStream);
 
-                    var shortLinks = records.ToList();
-                    _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
+                _logger.Information("Reading shortLinks from {filePath}", filePath);
+                var csv = new CsvReader(reader);
+                csv.Configuration.MissingFieldFound = null;
+                var records = csv.GetRecords<ShortLinkItem>();
 
-                    return shortLinks;
-                }
+                var shortLinks = records.ToList();
+                _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
+
+                return shortLinks;
             }
             catch (Exception ex)
             {
