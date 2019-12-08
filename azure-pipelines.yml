@@ -14,8 +14,28 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-
+  dockerfilePath: 'src/Dockerfile'
+  dockerRegistryServiceConnection: 'azure-container-reg'
+  containerRepositoryName: 'xluhco'
+  
 steps:
+- task: Docker@2
+  displayName: Build docker image
+  inputs:
+    command: build
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    repository: $(containerRepositoryName)
+- task: Docker@2
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: Push to registry (master branch only)
+  inputs:
+    command: push
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    repository: $(containerRepositoryName)
+    tags: |
+      'release'
 - task: DotNetCoreInstaller@2
   inputs:
     version: '3.1.100' # replace this value with the version that you need for your project
