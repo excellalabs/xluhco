@@ -15,7 +15,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   dockerfilePath: 'src/Dockerfile'
-  dockerRegistryServiceConnection: 'azure-container-reg'
+  dockerRegistryServiceConnection: xluhco-container-reg
   containerRepositoryName: 'xluhco'
   tag: 'release'
   
