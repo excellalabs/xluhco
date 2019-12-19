@@ -29,6 +29,7 @@ namespace xluhco.web.Repositories
             {
                 using var fileStream = new FileStream(filePath, FileMode.Open);
                 using var reader = new StreamReader(fileStream);
+
                 _logger.Information("Reading shortLinks from {filePath}", filePath);
                 var csv = new CsvReader(reader);
                 csv.Configuration.MissingFieldFound = null;
