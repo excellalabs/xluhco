@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Serilog;
 
@@ -27,18 +29,19 @@ namespace xluhco.web.Repositories
 
             try
             {
-                using var fileStream = new FileStream(filePath, FileMode.Open);
-                using var reader = new StreamReader(fileStream);
+                using (TextReader reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
+                    leaveOpen: false))
+                {
+                    _logger.Information("Reading shortLinks from {filePath}", filePath);
+                    csv.Configuration.MissingFieldFound = null;
+                    var records = csv.GetRecords<ShortLinkItem>();
 
-                _logger.Information("Reading shortLinks from {filePath}", filePath);
-                var csv = new CsvReader(reader);
-                csv.Configuration.MissingFieldFound = null;
-                var records = csv.GetRecords<ShortLinkItem>();
+                    var shortLinks = records.ToList();
+                    _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
 
-                var shortLinks = records.ToList();
-                _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
-
-                return shortLinks;
+                    return shortLinks;
+                }
             }
             catch (Exception ex)
             {
