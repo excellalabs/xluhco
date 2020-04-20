@@ -1,0 +1,18 @@
+version: '3'
+
+services: # these are all the services that a docker app uses
+
+  app: # this is the name of the service we're creating; it's chosen by us.
+    container_name: 'xluhco_site' # this is the name of the container to us
+    hostname: 'xluhco_site'
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+    - "5000:80"
+    networks:
+      - app-network
+      
+networks:
+  app-network:
+    driver: bridge
