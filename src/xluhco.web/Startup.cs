@@ -10,6 +10,8 @@ using Serilog;
 using xluhco.web.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 
 namespace xluhco.web
@@ -91,6 +93,7 @@ namespace xluhco.web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>
