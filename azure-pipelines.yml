@@ -17,8 +17,8 @@ variables:
   dockerfilePath: 'src/Dockerfile'
   dockerRegistryServiceConnection: xluhco-container-reg
   containerRepositoryName: 'xluhco'
-  tag: 'release'
-  
+  tag: '$(Build.BuildNumber)'
+
 steps:
 - task: Docker@2
   displayName: Build docker image
