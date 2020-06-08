@@ -118,6 +118,7 @@ namespace xluhco.web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseForwardedHeaders();
             app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseAuthentication();
