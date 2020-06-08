@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
 
 namespace xluhco.web
@@ -47,6 +48,7 @@ namespace xluhco.web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureHackyHttpsEnforcement(services);
             services.AddResponseCaching();
             services.AddMemoryCache();
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
@@ -84,6 +86,29 @@ namespace xluhco.web
             services.Configure<SiteOptions>(Configuration);
             services.AddApplicationInsightsTelemetry();
         }
+
+        /// <summary>
+        /// This is a workaround due to issues running in a Linux container with no reverse proxy in front of it.
+        /// In this situation, Azure AD authentication attempts to use a redirect URI that is http instead of https.
+        /// The out of the box templates for AD + Linux Docker unfortunately don't address this.
+        /// For more information: https://github.com/dotnet/aspnetcore/issues/22572
+        /// </summary>
+        /// <param name="services"></param>
+        private void ConfigureHackyHttpsEnforcement(IServiceCollection services)
+        {
+            // HACK
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                                           ForwardedHeaders.XForwardedProto;
+                // Only loopback proxies are allowed by default.
+                // Clear that restriction because forwarders are enabled by explicit 
+                // configuration.
+                options.KnownNetworks.Clear();
+                options.KnownProxies.Clear();
+            });
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
