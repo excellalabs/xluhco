@@ -10,6 +10,31 @@ using Serilog;
 
 namespace xluhco.web.Repositories
 {
+    public class BlobStorageCsvRepository : IShortLinkRepository
+    {
+        private string _storageConnectionString;
+        private ILogger _logger;
+        public BlobStorageCsvRepository(string storageConnectionString, ILogger logger)
+        {
+            if (string.IsNullOrWhiteSpace(storageConnectionString))
+            {
+                throw new ArgumentNullException(nameof(storageConnectionString));
+            }
+
+            _storageConnectionString = storageConnectionString;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+        public List<ShortLinkItem> GetShortLinks()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ShortLinkItem GetByShortCode(string shortCode)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class LocalCsvShortLinkRepository : IShortLinkRepository
     {
         private readonly ILogger _logger;
