@@ -160,11 +160,11 @@ namespace xluhco.web.tests.Controllers
             }
 
             [Fact]
-            public void NoShortCode_ReturnsNotFound()
+            public async Task NoShortCode_ReturnsNotFound()
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult<ShortLinkItem>(null));
 
-                var result = _sut.Index("abc");
+                var result = await _sut.Index("abc");
 
                 var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -188,11 +188,11 @@ namespace xluhco.web.tests.Controllers
             [InlineData(null)]
             [InlineData("")]
             [InlineData("    ")]
-            public void EmptyShortCodeUrl_ReturnsNotFound(string urlToTest)
+            public async Task EmptyShortCodeUrl_ReturnsNotFound(string urlToTest)
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult(new ShortLinkItem("abc", urlToTest)));
 
-                var result = _sut.Index("abc");
+                var result = await _sut.Index("abc");
 
                 var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -226,12 +226,12 @@ namespace xluhco.web.tests.Controllers
             }
 
             [Fact]
-            public void UrlFound_ReturnsIndexPage()
+            public async Task UrlFound_ReturnsIndexPage()
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
                     .Returns(Task.FromResult(new ShortLinkItem("test", "http://test.com")));
 
-                var result = _sut.Index("thisCodeDoesntMatter");
+                var result = await _sut.Index("thisCodeDoesntMatter");
 
                 var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -241,7 +241,7 @@ namespace xluhco.web.tests.Controllers
             [Theory]
             [InlineData("sk", "http://SeanKilleen.com", "12345", 3, null, null, null)]
             [InlineData("sk", "http://SeanKilleen.com", "12345", 3, "http://images.com/test.jpg", "Test Title", "Test Description")]
-            public void UrlFound_PopulatesViewModelCorrectly(string testShortCode, string testUrl, string testGaCode,
+            public async Task UrlFound_PopulatesViewModelCorrectly(string testShortCode, string testUrl, string testGaCode,
                 int testSecondsToWait, string testImageUrl, string testTitle, string testDescription)
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
@@ -261,7 +261,7 @@ namespace xluhco.web.tests.Controllers
                     _mockRedirectOptions.Object,
                     _mockGaOptions.Object);
 
-                var result = sut.Index(testShortCode);
+                var result = await sut.Index(testShortCode);
 
                 var viewResult = Assert.IsType<ViewResult>(result);
 

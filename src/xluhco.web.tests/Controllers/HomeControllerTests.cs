@@ -49,11 +49,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_ReturnsListView()
+        public async Task List_ReturnsListView()
         {
             _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -61,11 +61,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_NoItems_ReturnsEmptyList()
+        public async Task List_NoItems_ReturnsEmptyList()
         {
             _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -76,11 +76,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_OneListItem_ReturnsItem()
+        public async Task List_OneListItem_ReturnsItem()
         {
             _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>() { new ShortLinkItem("abc", "http://seankilleen.com") }));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -94,7 +94,7 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_MultipleItems_ReturnsItemsSortedByShortCode()
+        public async Task List_MultipleItems_ReturnsItemsSortedByShortCode()
         {
             _mockRepo.Setup(x => x.GetShortLinks()).Returns(
                 Task.FromResult(new List<ShortLinkItem>()
@@ -104,7 +104,7 @@ namespace xluhco.web.tests.Controllers
                     new ShortLinkItem("abc", "http://SeanKilleen.com")
                 }));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
