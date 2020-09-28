@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -48,11 +49,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_ReturnsListView()
+        public async Task List_ReturnsListView()
         {
-            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>());
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -60,11 +61,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_NoItems_ReturnsEmptyList()
+        public async Task List_NoItems_ReturnsEmptyList()
         {
-            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>());
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -75,11 +76,11 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_OneListItem_ReturnsItem()
+        public async Task List_OneListItem_ReturnsItem()
         {
-            _mockRepo.Setup(x => x.GetShortLinks()).Returns(new List<ShortLinkItem>(){new ShortLinkItem("abc", "http://seankilleen.com")});
+            _mockRepo.Setup(x => x.GetShortLinks()).Returns(Task.FromResult(new List<ShortLinkItem>() { new ShortLinkItem("abc", "http://seankilleen.com") }));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 
@@ -93,17 +94,17 @@ namespace xluhco.web.tests.Controllers
         }
 
         [Fact]
-        public void List_MultipleItems_ReturnsItemsSortedByShortCode()
+        public async Task List_MultipleItems_ReturnsItemsSortedByShortCode()
         {
             _mockRepo.Setup(x => x.GetShortLinks()).Returns(
-                new List<ShortLinkItem>()
+                Task.FromResult(new List<ShortLinkItem>()
                 {
                     new ShortLinkItem("ghi", "http://SeanKilleen.com"),
                     new ShortLinkItem("def", "http://SeanKilleen.com"),
                     new ShortLinkItem("abc", "http://SeanKilleen.com")
-                });
+                }));
 
-            var result = _sut.List();
+            var result = await _sut.List();
 
             var viewResult = Assert.IsType<ViewResult>(result);
 

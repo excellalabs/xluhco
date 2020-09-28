@@ -21,6 +21,8 @@ Check out the [Contributing.md](CONTRIBUTING.md) document for guidelines on how 
 * ASP.NET route binding to a `RedirectController`. (a basic `HomeController` matches empty routes.)
 * A `RedirectController` that makes use of an `IShortLinkRepository` to obtain links and permanently redirect if a matching short code is found
 * An implementation of `IShortLinkRepository` that reads a CSV file in `wwwroot` using [CsvHelper](https://joshclose.github.io/CsvHelper/).
+* An implementation of `IShortLinkRepository` that reads a CSV file from Azure Blob storage.
+* A configuration setting currently titled `LocalOrBlobStorage` that instantiates the right repository.
 * Google Analytics, written into the page from the server side response, that includes tracking links.
 * An automatic redirect using a callback from the Google Analytics event posting.
 

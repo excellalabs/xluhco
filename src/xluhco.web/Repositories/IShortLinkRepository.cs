@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace xluhco.web.Repositories
 {
     public interface IShortLinkRepository
     {
-        List<ShortLinkItem> GetShortLinks();
-        ShortLinkItem GetByShortCode(string shortCode);
+        Task<List<ShortLinkItem>> GetShortLinks();
+        Task<ShortLinkItem> GetByShortCode(string shortCode);
     }
 }

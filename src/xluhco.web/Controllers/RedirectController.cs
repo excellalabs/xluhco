@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using xluhco.web.Repositories;
@@ -22,10 +23,10 @@ namespace xluhco.web.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = int.MaxValue)]
-        public IActionResult Index(string shortCode)
+        public async Task<IActionResult> Index(string shortCode)
         {
             _logger.Debug("Entered the redirect for short code {shortCode}", shortCode);
-            var redirectItem = _shortLinkRepo.GetByShortCode(shortCode);
+            var redirectItem = await _shortLinkRepo.GetByShortCode(shortCode);
 
             if (string.IsNullOrWhiteSpace(redirectItem?.URL))
             {

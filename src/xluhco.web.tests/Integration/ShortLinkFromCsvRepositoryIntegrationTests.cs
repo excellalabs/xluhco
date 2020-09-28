@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -12,13 +13,13 @@ namespace xluhco.web.tests.Integration
     public class ShortLinkFromCsvRepositoryIntegrationTests
     {
         private readonly string _webRootPath;
-        private readonly ShortLinkFromCsvRepository _sut;
+        private readonly LocalCsvShortLinkRepository _sut;
         public ShortLinkFromCsvRepositoryIntegrationTests()
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var hostingEnv = (IWebHostEnvironment)server.Host.Services.GetService(typeof(IWebHostEnvironment));
             _webRootPath = hostingEnv.WebRootPath;
-            _sut = new ShortLinkFromCsvRepository(Dummy.Of<ILogger>(), hostingEnv);
+            _sut = new LocalCsvShortLinkRepository(Dummy.Of<ILogger>(), hostingEnv);
         }
 
         [Fact]
@@ -29,16 +30,17 @@ namespace xluhco.web.tests.Integration
         }
 
         [Fact]
-        public void NonEmptyList()
+        public async Task NonEmptyList()
         {
-            var links = _sut.GetShortLinks();
+            var links = await _sut.GetShortLinks();
             links.Should().NotBeEmpty();
         }
 
         [Fact]
-        public void AllLinksAreValidUrls()
+        public async Task AllLinksAreValidUrls()
         {
-            var urls = _sut.GetShortLinks().Select(x => x.URL).ToList();
+            var links = await _sut.GetShortLinks();
+            var urls = links.Select(x => x.URL).ToList();
 
             foreach (var url in urls)
             {
@@ -49,9 +51,10 @@ namespace xluhco.web.tests.Integration
         }
 
         [Fact]
-        public void NoDuplicateURLs()
+        public async Task NoDuplicateURLs()
         {
-            var shortLinkCodes = _sut.GetShortLinks().Select(x => x.ShortLinkCode).ToList();
+            var links = await _sut.GetShortLinks();
+            var shortLinkCodes = links.Select(x => x.ShortLinkCode).ToList();
 
             var duplicateCodes = shortLinkCodes.GroupBy(x => x)
                 .Where(group => group.Count() > 1)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Serilog;
@@ -54,20 +55,20 @@ namespace xluhco.web.tests.Repositories
                     _mockRepo.Object);
 
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
             }
 
             [Fact]
-            public void IfLinksInCache_ReturnsLinks()
+            public async Task IfLinksInCache_ReturnsLinks()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>
+                    .Returns(Task.FromResult(new List<ShortLinkItem>
                     {
                         new ShortLinkItem("abc", "blahblah"),
                         new ShortLinkItem("def", "blahblah")
-                    });
+                    }));
 
-                var result= _sut.GetShortLinks();
+                var result= await _sut.GetShortLinks();
 
                 result.Should().HaveCount(2);
 
@@ -76,55 +77,55 @@ namespace xluhco.web.tests.Repositories
             }
 
             [Fact]
-            public void IfNoLinks_LogsWarning()
+            public async Task IfNoLinks_LogsWarning()
             {
-                _sut.GetShortLinks();
+                await _sut.GetShortLinks();
 
                 _mockLogger.Verify(x=>x.Warning("No short links in cache -- populating from repo"), Times.Once);
             }
 
             [Fact]
-            public void IfNoLinks_PopulatesFromRepo()
+            public async Task IfNoLinks_PopulatesFromRepo()
             {
-                _sut.GetShortLinks();
+                await _sut.GetShortLinks();
 
                 _mockRepo.Verify(x=>x.GetShortLinks(), Times.Once);
             }
 
             [Fact]
-            public void IfNoLinks_AfterPopulating_LogsCount()
+            public async Task IfNoLinks_AfterPopulating_LogsCount()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>
+                    .Returns(Task.FromResult(new List<ShortLinkItem>
                     {
                         new ShortLinkItem("abc", "blahblah"),
                         new ShortLinkItem("def", "blahblah")
-                    });
+                    }));
 
-                _sut.GetShortLinks();
+                await _sut.GetShortLinks();
 
                 _mockLogger.Verify(x=>x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]
-            public void IfPopulatedWithNoLinks_CallsRepoAgain()
+            public async Task IfPopulatedWithNoLinks_CallsRepoAgain()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-                _sut.GetShortLinks();
-                _sut.GetShortLinks();
+                await _sut.GetShortLinks();
+                await _sut.GetShortLinks();
 
                 _mockRepo.Verify(x=>x.GetShortLinks(), Times.Exactly(2));
             }
 
             [Fact]
-            public void IfPopulatedWithNoLinks_ReturnsEmptyList()
+            public async Task IfPopulatedWithNoLinks_ReturnsEmptyList()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-                var result = _sut.GetShortLinks();
+                var result = await _sut.GetShortLinks();
 
                 result.Should().NotBeNull();
                 result.Should().BeEmpty();
@@ -144,90 +145,90 @@ namespace xluhco.web.tests.Repositories
                     _mockRepo.Object);
 
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
             }
 
 
             [Fact]
-            public void IfLinksInCache_ReturnsMatchingLink()
+            public async Task IfLinksInCache_ReturnsMatchingLink()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>
+                    .Returns(Task.FromResult(new List<ShortLinkItem>
                     {
                         new ShortLinkItem("abc", "blahblahabc"),
                         new ShortLinkItem("def", "blahblah")
-                    });
+                    }));
 
-                var result = _sut.GetByShortCode("abc");
+                var result = await _sut.GetByShortCode("abc");
 
                 result.URL.Should().Be("blahblahabc");
             }
 
             [Fact]
-            public void IfLinksInCacheButNoneMatching_ReturnNull()
+            public async Task IfLinksInCacheButNoneMatching_ReturnNull()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>
+                    .Returns(Task.FromResult(new List<ShortLinkItem>
                     {
                         new ShortLinkItem("abc", "blahblahabc"),
                         new ShortLinkItem("def", "blahblah")
-                    });
+                    }));
 
-                var result = _sut.GetByShortCode("wontbefound");
+                var result = await _sut.GetByShortCode("wontbefound");
 
                 result.Should().BeNull();
             }
 
             [Fact]
-            public void IfNoLinks_LogsWarning()
+            public async Task IfNoLinks_LogsWarning()
             {
-                _sut.GetByShortCode("test");
+                await _sut.GetByShortCode("test");
 
                 _mockLogger.Verify(x => x.Warning("No short links in cache -- populating from repo"), Times.Once);
             }
 
             [Fact]
-            public void IfNoLinks_PopulatesFromRepo()
+            public async Task IfNoLinks_PopulatesFromRepo()
             {
-                _sut.GetByShortCode("test");
+                await _sut.GetByShortCode("test");
 
                 _mockRepo.Verify(x=>x.GetShortLinks(), Times.Once);
             }
 
             [Fact]
-            public void IfNoLinks_AfterPopulating_LogsCount()
+            public async Task IfNoLinks_AfterPopulating_LogsCount()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>
+                    .Returns(Task.FromResult(new List<ShortLinkItem>
                     {
                         new ShortLinkItem("abc", "blahblah"),
                         new ShortLinkItem("def", "blahblah")
-                    });
+                    }));
 
-                _sut.GetByShortCode("test");
+                await _sut.GetByShortCode("test");
 
                 _mockLogger.Verify(x => x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]
-            public void IfPopulatedWithNoLinks_CallsRepoAgain()
+            public async Task IfPopulatedWithNoLinks_CallsRepoAgain()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-                _sut.GetByShortCode("test");
-                _sut.GetByShortCode("test");
+                await _sut.GetByShortCode("test");
+                await _sut.GetByShortCode("test");
 
                 _mockRepo.Verify(x => x.GetShortLinks(), Times.Exactly(2));
             }
 
             [Fact]
-            public void IfPopulatedWithNoLinks_ReturnsNull()
+            public async Task IfPopulatedWithNoLinks_ReturnsNull()
             {
                 _mockRepo.Setup(x => x.GetShortLinks())
-                    .Returns(new List<ShortLinkItem>());
+                    .Returns(Task.FromResult(new List<ShortLinkItem>()));
 
-                var result = _sut.GetByShortCode("test");
+                var result = await _sut.GetByShortCode("test");
 
                 result.Should().BeNull();
             }

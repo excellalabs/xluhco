@@ -74,10 +74,18 @@ namespace xluhco.web
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddScoped(ctx => WireUpLogging());
-            services.AddScoped<ShortLinkFromCsvRepository>();
+            services.AddScoped<LocalCsvShortLinkRepository>();
+            services.Configure<BlobCsvConfiguration>(Configuration.GetSection("BlobCsvStorage"));
+            services.AddScoped<BlobStorageCsvRepository>();
             services.AddScoped<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
             {
-                var repoService = ctx.GetRequiredService<ShortLinkFromCsvRepository>();
+ 
+                var localOrBlob = Configuration["LocalOrBlobStorage"].ToLowerInvariant();
+
+                IShortLinkRepository repoService;
+                if (localOrBlob == "blob") {  repoService = ctx.GetRequiredService<BlobStorageCsvRepository>(); }
+                else { repoService = ctx.GetRequiredService<LocalCsvShortLinkRepository>(); }
+
                 var logger = ctx.GetRequiredService<Serilog.ILogger>();
 
                 return new CachedShortLinkRepository(logger, repoService);
