@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -141,19 +142,19 @@ namespace xluhco.web.tests.Controllers
             }
 
             [Fact]
-            public void LogsTheRedirectShortCode()
+            public async Task LogsTheRedirectShortCode()
             {
-                _sut.Index("abc");
+                await _sut.Index("abc");
 
                 _mockLogger.Verify(x=> x.Debug("Entered the redirect for short code {shortCode}", "abc"));
             }
 
             [Fact]
-            public void NoShortCode_LogsWarning()
+            public async Task NoShortCode_LogsWarning()
             {
-                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns((ShortLinkItem) null);
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult<ShortLinkItem>(null));
 
-                _sut.Index("abc");
+                await _sut.Index("abc");
 
                 _mockLogger.Verify(x=>x.Warning("No redirect found for requested short code {shortCode}", "abc"));
             }
@@ -161,7 +162,7 @@ namespace xluhco.web.tests.Controllers
             [Fact]
             public void NoShortCode_ReturnsNotFound()
             {
-                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns((ShortLinkItem)null);
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult<ShortLinkItem>(null));
 
                 var result = _sut.Index("abc");
 
@@ -174,11 +175,11 @@ namespace xluhco.web.tests.Controllers
             [InlineData(null)]
             [InlineData("")]
             [InlineData("    ")]
-            public void EmptyShortCodeUrl_LogsWarning(string urlToTest)
+            public async Task EmptyShortCodeUrl_LogsWarning(string urlToTest)
             {
-                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(new ShortLinkItem("abc", urlToTest));
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult(new ShortLinkItem("abc", urlToTest)));
 
-                _sut.Index("abc");
+                await _sut.Index("abc");
 
                 _mockLogger.Verify(x => x.Warning("No redirect found for requested short code {shortCode}", "abc"));
             }
@@ -189,7 +190,7 @@ namespace xluhco.web.tests.Controllers
             [InlineData("    ")]
             public void EmptyShortCodeUrl_ReturnsNotFound(string urlToTest)
             {
-                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(new ShortLinkItem("abc", urlToTest));
+                _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>())).Returns(Task.FromResult(new ShortLinkItem("abc", urlToTest)));
 
                 var result = _sut.Index("abc");
 
@@ -199,14 +200,14 @@ namespace xluhco.web.tests.Controllers
             }
 
             [Fact]
-            public void UrlFound_LogsShortCodeAndURLAndTrackingId()
+            public async Task UrlFound_LogsShortCodeAndURLAndTrackingId()
             {
                 var testShortCode = "sk";
                 var testUrl = "http://SeanKilleen.com";
                 var testGaCode = "12345";
 
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
-                    .Returns(new ShortLinkItem(testShortCode, testUrl));
+                    .Returns(Task.FromResult(new ShortLinkItem(testShortCode, testUrl)));
 
                 _mockGaOptions.Setup(x => x.Value)
                     .Returns(new GoogleAnalyticsOptions {TrackingPropertyId = testGaCode});
@@ -219,7 +220,7 @@ namespace xluhco.web.tests.Controllers
                     _mockRedirectOptions.Object, 
                     _mockGaOptions.Object);
 
-                sut.Index("thisCodeDoesntMatter");
+                await sut.Index("thisCodeDoesntMatter");
 
                 _mockLogger.Verify(x=>x.Information("Redirecting {shortCode} to {redirectUrl} using tracking Id {gaTrackingId}", testShortCode, testUrl, testGaCode));
             }
@@ -228,7 +229,7 @@ namespace xluhco.web.tests.Controllers
             public void UrlFound_ReturnsIndexPage()
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
-                    .Returns(new ShortLinkItem("test", "http://test.com"));
+                    .Returns(Task.FromResult(new ShortLinkItem("test", "http://test.com")));
 
                 var result = _sut.Index("thisCodeDoesntMatter");
 
@@ -244,7 +245,7 @@ namespace xluhco.web.tests.Controllers
                 int testSecondsToWait, string testImageUrl, string testTitle, string testDescription)
             {
                 _mockRepo.Setup(x => x.GetByShortCode(It.IsAny<string>()))
-                    .Returns(new ShortLinkItem(testShortCode, testUrl, testImageUrl, testTitle, testDescription));
+                    .Returns(Task.FromResult(new ShortLinkItem(testShortCode, testUrl, testImageUrl, testTitle, testDescription)));
 
                 _mockGaOptions.Setup(x => x.Value)
                     .Returns(new GoogleAnalyticsOptions { TrackingPropertyId = testGaCode });
