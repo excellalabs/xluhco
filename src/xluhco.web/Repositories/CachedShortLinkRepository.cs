@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Serilog;
 
 namespace xluhco.web.Repositories
@@ -18,7 +19,7 @@ namespace xluhco.web.Repositories
             _shortLinks = new List<ShortLinkItem>();
         }
 
-        private void PopulateShortLinksIfNone()
+        private async Task PopulateShortLinksIfNone()
         {
             if (_shortLinks.Any())
             {
@@ -26,19 +27,19 @@ namespace xluhco.web.Repositories
             }
 
             _logger.Warning("No short links in cache -- populating from repo");
-            _shortLinks = _repo.GetShortLinks();
+            _shortLinks = await _repo.GetShortLinks();
             _logger.Information("Afer populating from cache, there are now {numShortLinks} short links", _shortLinks.Count);
         }
 
-        public List<ShortLinkItem> GetShortLinks()
+        public async Task<List<ShortLinkItem>> GetShortLinks()
         {
-            PopulateShortLinksIfNone();
+            await PopulateShortLinksIfNone();
             return _shortLinks;
         }
 
-        public ShortLinkItem GetByShortCode(string shortCode)
+        public async Task<ShortLinkItem> GetByShortCode(string shortCode)
         {
-            PopulateShortLinksIfNone();
+            await PopulateShortLinksIfNone();
 
             return _shortLinks
                 .FirstOrDefault(x => x.ShortLinkCode.Equals(shortCode, StringComparison.InvariantCultureIgnoreCase));
