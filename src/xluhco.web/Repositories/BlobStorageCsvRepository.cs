@@ -4,50 +4,51 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 namespace xluhco.web.Repositories
 {
-    public class LocalCsvShortLinkRepository : IShortLinkRepository
+    public class BlobStorageCsvRepository : IShortLinkRepository
     {
+        private readonly BlobCsvConfiguration _configuration;
         private readonly ILogger _logger;
-        private readonly IWebHostEnvironment _env;
-
-        public LocalCsvShortLinkRepository(ILogger logger, IWebHostEnvironment env)
+        public BlobStorageCsvRepository(IOptions<BlobCsvConfiguration> config, ILogger logger)
         {
-            _logger = logger;
-            _env = env;
+            _configuration = config.Value ?? throw new ArgumentNullException(nameof(config));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
-        public Task<List<ShortLinkItem>> GetShortLinks()
+        public async Task<List<ShortLinkItem>> GetShortLinks()
         {
             _logger.Information("Beginning to populate short links");
-
-            var filePath = Path.Combine(_env.WebRootPath, "ShortLinks.csv");
-
             try
             {
-                using (TextReader reader = new StreamReader(filePath))
+                BlobServiceClient blobServiceClient = new BlobServiceClient(_configuration.ConnectionString);
+                var containerClient = blobServiceClient.GetBlobContainerClient(_configuration.ContainerName);
+                var blobClient = containerClient.GetBlobClient(_configuration.FileName);
+
+                using (var stream = await blobClient.OpenReadAsync())
+                using (TextReader reader = new StreamReader(stream))
                 using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
                     leaveOpen: false))
                 {
-                    _logger.Information("Reading shortLinks from {filePath}", filePath);
+                    _logger.Information("Reading shortLinks from blob");
                     csv.Configuration.MissingFieldFound = null;
                     var records = csv.GetRecords<ShortLinkItem>();
 
                     var shortLinks = records.ToList();
                     _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
 
-                    return Task.FromResult(shortLinks);
+                    return shortLinks;
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while attempting to populate short linkes from {filePath}", filePath);
-                return Task.FromResult(new List<ShortLinkItem>());
+                _logger.Error(ex, "An error occurred when populating short links.");
+                return new List<ShortLinkItem>();
             }
         }
 
