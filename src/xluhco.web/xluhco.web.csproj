@@ -7,11 +7,13 @@
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <LangVersion>8</LangVersion>
+    <UserSecretsId>638a2c5b-1a36-4b5c-8b99-1b49914d21e1</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.6.0" />
     <PackageReference Include="CsvHelper" Version="15.0.5" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.14.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />

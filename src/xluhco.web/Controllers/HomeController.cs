@@ -26,12 +26,13 @@ namespace xluhco.web.Controllers
         }
 
         [Authorize]
-       public IActionResult List()
+       public async Task<IActionResult> List()
         {
-            var orderedLinks = _memoryCache.GetOrCreate("allLinks", entry =>
+            var orderedLinks = await _memoryCache.GetOrCreate("allLinks", async entry =>
             {
                 entry.SlidingExpiration = TimeSpan.MaxValue;
-                return _repo.GetShortLinks().OrderBy(x => x.ShortLinkCode).ToList();
+                var links = await _repo.GetShortLinks();
+                return links.OrderBy(x => x.ShortLinkCode).ToList();
             });
 
             return View("List", orderedLinks);
