@@ -26,12 +26,28 @@ namespace xluhco.web.Repositories
         }
         public List<ShortLinkItem> GetShortLinks()
         {
-            throw new NotImplementedException();
+            _logger.Information("Beginning to populate short links");
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An error occurred when populating short links.");
+            }
         }
 
         public ShortLinkItem GetByShortCode(string shortCode)
         {
-            throw new NotImplementedException();
+            _logger.Information("Getting short code {ShortCode}", shortCode);
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "An error occurred when retrieving short code {ShortCode}", shortCode);
+            }
         }
     }
 
