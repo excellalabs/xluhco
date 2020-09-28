@@ -10,12 +10,12 @@ using Serilog;
 
 namespace xluhco.web.Repositories
 {
-    public class ShortLinkFromCsvRepository : IShortLinkRepository
+    public class LocalCsvShortLinkRepository : IShortLinkRepository
     {
         private readonly ILogger _logger;
         private readonly IWebHostEnvironment _env;
 
-        public ShortLinkFromCsvRepository(ILogger logger, IWebHostEnvironment env)
+        public LocalCsvShortLinkRepository(ILogger logger, IWebHostEnvironment env)
         {
             _logger = logger;
             _env = env;

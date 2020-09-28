@@ -12,13 +12,13 @@ namespace xluhco.web.tests.Integration
     public class ShortLinkFromCsvRepositoryIntegrationTests
     {
         private readonly string _webRootPath;
-        private readonly ShortLinkFromCsvRepository _sut;
+        private readonly LocalCsvShortLinkRepository _sut;
         public ShortLinkFromCsvRepositoryIntegrationTests()
         {
             var server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
             var hostingEnv = (IWebHostEnvironment)server.Host.Services.GetService(typeof(IWebHostEnvironment));
             _webRootPath = hostingEnv.WebRootPath;
-            _sut = new ShortLinkFromCsvRepository(Dummy.Of<ILogger>(), hostingEnv);
+            _sut = new LocalCsvShortLinkRepository(Dummy.Of<ILogger>(), hostingEnv);
         }
 
         [Fact]
