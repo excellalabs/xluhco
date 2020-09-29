@@ -22,4 +22,8 @@
     <ProjectReference Include="..\xluhco.web\xluhco.web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Integration\" />
+  </ItemGroup>
+
 </Project>
