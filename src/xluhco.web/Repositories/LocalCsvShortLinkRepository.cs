@@ -31,7 +31,7 @@ namespace xluhco.web.Repositories
             try
             {
                 using (TextReader reader = new StreamReader(filePath))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
+                using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture,
                     leaveOpen: false))
                 {
                     _logger.Information("Reading shortLinks from {filePath}", filePath);

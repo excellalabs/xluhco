@@ -32,7 +32,7 @@ namespace xluhco.web.Repositories
 
                 using (var stream = await blobClient.OpenReadAsync())
                 using (TextReader reader = new StreamReader(stream))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
+                using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture,
                     leaveOpen: false))
                 {
                     _logger.Information("Reading shortLinks from blob");
