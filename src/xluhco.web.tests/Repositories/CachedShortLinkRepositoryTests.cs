@@ -104,7 +104,7 @@ namespace xluhco.web.tests.Repositories
 
                 await _sut.GetShortLinks();
 
-                _mockLogger.Verify(x=>x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
+                _mockLogger.Verify(x=>x.Information("After populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]
@@ -207,7 +207,7 @@ namespace xluhco.web.tests.Repositories
 
                 await _sut.GetByShortCode("test");
 
-                _mockLogger.Verify(x => x.Information("Afer populating from cache, there are now {numShortLinks} short links", 2));
+                _mockLogger.Verify(x => x.Information("After populating from cache, there are now {numShortLinks} short links", 2));
             }
 
             [Fact]

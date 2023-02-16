@@ -15,11 +15,16 @@ namespace xluhco.web.Repositories
     {
         private readonly ILogger _logger;
         private readonly IWebHostEnvironment _env;
+        private readonly CsvConfiguration _config;
 
         public LocalCsvShortLinkRepository(ILogger logger, IWebHostEnvironment env)
         {
             _logger = logger;
             _env = env;
+
+            _config = new CsvConfiguration(CultureInfo.CurrentCulture);
+            _config.MissingFieldFound = null;
+
         }
 
         public Task<List<ShortLinkItem>> GetShortLinks()
@@ -31,11 +36,10 @@ namespace xluhco.web.Repositories
             try
             {
                 using (TextReader reader = new StreamReader(filePath))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
+                using (var csv = new CsvReader(reader, _config,
                     leaveOpen: false))
                 {
                     _logger.Information("Reading shortLinks from {filePath}", filePath);
-                    csv.Configuration.MissingFieldFound = null;
                     var records = csv.GetRecords<ShortLinkItem>();
 
                     var shortLinks = records.ToList();

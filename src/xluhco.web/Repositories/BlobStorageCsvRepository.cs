@@ -16,10 +16,15 @@ namespace xluhco.web.Repositories
     {
         private readonly BlobCsvConfiguration _configuration;
         private readonly ILogger _logger;
+        private readonly CsvConfiguration _config;
         public BlobStorageCsvRepository(IOptions<BlobCsvConfiguration> config, ILogger logger)
         {
             _configuration = config.Value ?? throw new ArgumentNullException(nameof(config));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            
+            _config = new CsvConfiguration(CultureInfo.CurrentCulture);
+            _config.MissingFieldFound = null;
+
         }
         public async Task<List<ShortLinkItem>> GetShortLinks()
         {
@@ -29,14 +34,12 @@ namespace xluhco.web.Repositories
                 BlobServiceClient blobServiceClient = new BlobServiceClient(_configuration.ConnectionString);
                 var containerClient = blobServiceClient.GetBlobContainerClient(_configuration.ContainerName);
                 var blobClient = containerClient.GetBlobClient(_configuration.FileName);
-
                 using (var stream = await blobClient.OpenReadAsync())
                 using (TextReader reader = new StreamReader(stream))
-                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.CurrentCulture),
+                using (var csv = new CsvReader(reader, _config,
                     leaveOpen: false))
                 {
                     _logger.Information("Reading shortLinks from blob");
-                    csv.Configuration.MissingFieldFound = null;
                     var records = csv.GetRecords<ShortLinkItem>();
 
                     var shortLinks = records.ToList();

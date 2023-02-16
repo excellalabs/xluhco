@@ -1,11 +1,11 @@
 trigger:
-- master
+- main
 
 pr:
-- master
+- main
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  vmImage: 'Ubuntu-22.04'
 
 variables:
   buildConfiguration: 'Release'

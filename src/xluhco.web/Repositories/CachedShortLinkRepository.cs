@@ -28,7 +28,7 @@ namespace xluhco.web.Repositories
 
             _logger.Warning("No short links in cache -- populating from repo");
             _shortLinks = await _repo.GetShortLinks();
-            _logger.Information("Afer populating from cache, there are now {numShortLinks} short links", _shortLinks.Count);
+            _logger.Information("After populating from cache, there are now {numShortLinks} short links", _shortLinks.Count);
         }
 
         public async Task<List<ShortLinkItem>> GetShortLinks()
