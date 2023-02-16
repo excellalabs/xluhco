@@ -25,8 +25,8 @@ steps:
     tags: |
       $(tag)
 - task: Docker@2
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  displayName: Push to registry (master branch only)
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  displayName: Push to registry (main branch only)
   inputs:
     command: push
     dockerfile: $(dockerfilePath)

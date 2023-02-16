@@ -2,11 +2,11 @@
 
 A URL shortener for Excella that lives at <http://xluh.co> (Excella co. Get it?)
 
-Click the links below to view the current status. 
+Click the links below to view the current status.
 
-| Build status  | Deployment status | Dependencies | 
+| Build status  | Deployment status | Dependencies |
 | ------------- | ------------- | ---------------- |
-| [![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=master)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=master)  | [![Deployment Status](https://vsrm.dev.azure.com/excellaco/_apis/public/Release/badge/fe08bdf8-31f0-4c33-abb5-7869d3914fdb/1/1)](https://dev.azure.com/excellaco/xluhco/_release?definitionId=1) | [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=excellalabs/xluhco)](https://dependabot.com) |
+| [![Build Status](https://dev.azure.com/excellaco/xluhco/_apis/build/status/excellalabs.xluhco?branchName=main)](https://dev.azure.com/excellaco/xluhco/_build/latest?definitionId=4&branchName=main)  | [![Deployment Status](https://vsrm.dev.azure.com/excellaco/_apis/public/Release/badge/fe08bdf8-31f0-4c33-abb5-7869d3914fdb/1/1)](https://dev.azure.com/excellaco/xluhco/_release?definitionId=1) | [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=excellalabs/xluhco)](https://dependabot.com) |
 
 ## Adapting xluh.co for Your Own Domain Name
 
