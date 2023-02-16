@@ -37,7 +37,7 @@ If you sign up for Azure DevOps and point it to your cloned repository, the `azu
 
 ## Step 5: Set up a Deployment Pipeline
 
-In the case of the live `xluh.co` domain, we use an Azure Web Site and Azure DevOps Releases to automatically deploy from our master branch. You can do this via the steps below.
+In the case of the live `xluh.co` domain, we use an Azure Web Site and Azure DevOps Releases to automatically deploy from our `main` branch. You can do this via the steps below.
 
 ### Creating the Site
 
@@ -57,7 +57,7 @@ In the case of the live `xluh.co` domain, we use an Azure Web Site and Azure Dev
 * Ensure that the release is set to automatically kick off.
 * Save your changes
 
-After this, you'll have a web site that deploys automatically, and a CI process that protects your code before it makes it to the master branch. Not bad!
+After this, you'll have a web site that deploys automatically, and a CI process that protects your code before it makes it to the `main` branch. Not bad!
 
 ## Step 6: Update the docs (Optional)
 
