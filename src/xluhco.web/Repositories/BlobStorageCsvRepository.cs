@@ -16,7 +16,7 @@ namespace xluhco.web.Repositories
     {
         private readonly BlobCsvConfiguration _configuration;
         private readonly ILogger _logger;
-        private CsvConfiguration _config;
+        private readonly CsvConfiguration _config;
         public BlobStorageCsvRepository(IOptions<BlobCsvConfiguration> config, ILogger logger)
         {
             _configuration = config.Value ?? throw new ArgumentNullException(nameof(config));
