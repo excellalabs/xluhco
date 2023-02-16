@@ -10,7 +10,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   dockerfilePath: 'src/Dockerfile'
-  dockerRegistryServiceConnection: xluhco-container-reg
+  dockerRegistryServiceConnection: xluhco-container-reg-2023
   containerRepositoryName: 'xluhco'
   tag: '$(Build.BuildNumber)'
 
