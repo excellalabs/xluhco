@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 
 namespace xluhco.web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async void Main(string[] args)
         {
-            BuildWebHost(args).Run();
-        }
+            var startedApp = await Host.CreateDefaultBuilder(args)
+                .UseSerilog().StartAsync();
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseSerilog()
-                .Build();
+            await startedApp.WaitForShutdownAsync();
+        } 
     }
 }
