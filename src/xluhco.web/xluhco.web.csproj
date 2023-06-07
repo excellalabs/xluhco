@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/8562adbc-78cd-4694-9dc5-1d1f2d2cf915/resourcegroups/xluhco/providers/microsoft.insights/components/xluhco</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/8562adbc-78cd-4694-9dc5-1d1f2d2cf915/resourceGroups/xluhco/providers/microsoft.insights/components/xluhco</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <LangVersion>8</LangVersion>
+    <LangVersion>11</LangVersion>
     <UserSecretsId>638a2c5b-1a36-4b5c-8b99-1b49914d21e1</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
