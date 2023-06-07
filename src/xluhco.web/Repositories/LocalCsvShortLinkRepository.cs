@@ -50,7 +50,7 @@ namespace xluhco.web.Repositories
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "An error occurred while attempting to populate short linkes from {filePath}", filePath);
+                _logger.Error(ex, "An error occurred while attempting to populate short links from {filePath}", filePath);
                 return Task.FromResult(new List<ShortLinkItem>());
             }
         }
