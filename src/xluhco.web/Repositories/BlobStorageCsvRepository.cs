@@ -22,9 +22,10 @@ namespace xluhco.web.Repositories
             _configuration = config.Value ?? throw new ArgumentNullException(nameof(config));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             
-            _config = new CsvConfiguration(CultureInfo.CurrentCulture);
-            _config.MissingFieldFound = null;
-
+            _config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                MissingFieldFound = null
+            };
         }
         public async Task<List<ShortLinkItem>> GetShortLinks()
         {
@@ -34,19 +35,18 @@ namespace xluhco.web.Repositories
                 BlobServiceClient blobServiceClient = new BlobServiceClient(_configuration.ConnectionString);
                 var containerClient = blobServiceClient.GetBlobContainerClient(_configuration.ContainerName);
                 var blobClient = containerClient.GetBlobClient(_configuration.FileName);
-                using (var stream = await blobClient.OpenReadAsync())
-                using (TextReader reader = new StreamReader(stream))
-                using (var csv = new CsvReader(reader, _config,
-                    leaveOpen: false))
-                {
-                    _logger.Information("Reading shortLinks from blob");
-                    var records = csv.GetRecords<ShortLinkItem>();
+                
+                await using var stream = await blobClient.OpenReadAsync();
+                using TextReader reader = new StreamReader(stream);
+                using var csv = new CsvReader(reader, _config, leaveOpen: false);
+                
+                _logger.Information("Reading shortLinks from blob");
+                var records = csv.GetRecords<ShortLinkItem>();
 
-                    var shortLinks = records.ToList();
-                    _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
+                var shortLinks = records.ToList();
+                _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
 
-                    return shortLinks;
-                }
+                return shortLinks;
             }
             catch (Exception ex)
             {
