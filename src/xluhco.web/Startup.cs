@@ -1,19 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using xluhco.web.Repositories;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using Microsoft.AspNetCore.CookiePolicy;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
 
 namespace xluhco.web
 {
@@ -52,26 +46,9 @@ namespace xluhco.web
             ConfigureHackyHttpsEnforcement(services);
             services.AddResponseCaching();
             services.AddMemoryCache();
-            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
-                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
-
-            services.Configure<OpenIdConnectOptions>(AzureADDefaults.OpenIdScheme, options =>
-            {
-                options.Authority += "/v2.0/";
-
-                options.TokenValidationParameters.ValidateIssuer = true; // Enforces that it checks for our specific domain
-                options.Events = new OpenIdConnectEvents()
-                {
-                    OnTicketReceived = (context) =>
-                    {
-                        context.Properties.IsPersistent = true;
-                        context.Properties.ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1);
-
-                        return Task.FromResult(0);
-                    }
-                };
-            });
-
+            services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+            
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddScoped(ctx => WireUpLogging());
             services.AddScoped<LocalCsvShortLinkRepository>();
