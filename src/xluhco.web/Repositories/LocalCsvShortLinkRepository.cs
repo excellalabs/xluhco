@@ -22,9 +22,10 @@ namespace xluhco.web.Repositories
             _logger = logger;
             _env = env;
 
-            _config = new CsvConfiguration(CultureInfo.CurrentCulture);
-            _config.MissingFieldFound = null;
-
+            _config = new CsvConfiguration(CultureInfo.CurrentCulture)
+            {
+                MissingFieldFound = null
+            };
         }
 
         public Task<List<ShortLinkItem>> GetShortLinks()
@@ -35,18 +36,15 @@ namespace xluhco.web.Repositories
 
             try
             {
-                using (TextReader reader = new StreamReader(filePath))
-                using (var csv = new CsvReader(reader, _config,
-                    leaveOpen: false))
-                {
-                    _logger.Information("Reading shortLinks from {filePath}", filePath);
-                    var records = csv.GetRecords<ShortLinkItem>();
+                using TextReader reader = new StreamReader(filePath);
+                using var csv = new CsvReader(reader, _config, leaveOpen: false);
+                _logger.Information("Reading shortLinks from {filePath}", filePath);
+                var records = csv.GetRecords<ShortLinkItem>();
 
-                    var shortLinks = records.ToList();
-                    _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
+                var shortLinks = records.ToList();
+                _logger.Information("Populated {numberOfShortLinks} short links", shortLinks.Count);
 
-                    return Task.FromResult(shortLinks);
-                }
+                return Task.FromResult(shortLinks);
             }
             catch (Exception ex)
             {
