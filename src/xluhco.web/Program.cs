@@ -45,7 +45,7 @@ namespace xluhco.web
                 options.Authority += "/v2.0/";
 
                 options.TokenValidationParameters.ValidateIssuer = true; // Enforces that it checks for our specific domain
-                options.Events = new OpenIdConnectEvents()
+                options.Events = new OpenIdConnectEvents
                 {
                     OnTicketReceived = (context) =>
                     {
