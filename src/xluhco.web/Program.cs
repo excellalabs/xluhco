@@ -13,6 +13,7 @@ using xluhco.web.Repositories;
 
 namespace xluhco.web
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Program
     {
         public static void Main(string[] args)
@@ -109,7 +110,7 @@ namespace xluhco.web
                 if (localOrBlob == "blob") { repoService = ctx.GetRequiredService<BlobStorageCsvRepository>(); }
                 else { repoService = ctx.GetRequiredService<LocalCsvShortLinkRepository>(); }
 
-                var logger = ctx.GetRequiredService<Serilog.ILogger>();
+                var logger = ctx.GetRequiredService<ILogger>();
 
                 return new CachedShortLinkRepository(logger, repoService);
             });
