@@ -34,6 +34,7 @@ namespace xluhco.web
             });
 
             ConfigureHackyHttpsEnforcement(builder.Services);
+
             builder.Services.AddResponseCaching();
             builder.Services.AddMemoryCache();
             builder.Services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
@@ -56,26 +57,11 @@ namespace xluhco.web
                 };
             });
 
+            
             builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-            builder.Services.AddScoped<LocalCsvShortLinkRepository>();
-            builder.Services.Configure<BlobCsvConfiguration>(builder.Configuration.GetSection("BlobCsvStorage"));
-            builder.Services.AddScoped<BlobStorageCsvRepository>();
-            builder.Services.AddScoped<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
-            {
 
-                var localOrBlob = builder.Configuration["LocalOrBlobStorage"].ToLowerInvariant();
-
-                IShortLinkRepository repoService;
-                if (localOrBlob == "blob") { repoService = ctx.GetRequiredService<BlobStorageCsvRepository>(); }
-                else { repoService = ctx.GetRequiredService<LocalCsvShortLinkRepository>(); }
-
-                var logger = ctx.GetRequiredService<Serilog.ILogger>();
-
-                return new CachedShortLinkRepository(logger, repoService);
-            });
-            builder.Services.Configure<RedirectOptions>(builder.Configuration);
-            builder.Services.Configure<GoogleAnalyticsOptions>(builder.Configuration);
-            builder.Services.Configure<SiteOptions>(builder.Configuration);
+            ConfigureOurDependencyInjection(builder.Services, builder.Configuration);
+            
             builder.Services.AddApplicationInsightsTelemetry();
 
             var app = builder.Build();
@@ -107,6 +93,29 @@ namespace xluhco.web
 
             app.Run();
 
+        }
+
+        private static void ConfigureOurDependencyInjection(IServiceCollection builderServices, ConfigurationManager builderConfiguration)
+        {
+            builderServices.AddScoped<LocalCsvShortLinkRepository>();
+            builderServices.Configure<BlobCsvConfiguration>(builderConfiguration.GetSection("BlobCsvStorage"));
+            builderServices.AddScoped<BlobStorageCsvRepository>();
+            builderServices.AddScoped<IShortLinkRepository, CachedShortLinkRepository>((ctx) =>
+            {
+
+                var localOrBlob = builderConfiguration["LocalOrBlobStorage"].ToLowerInvariant();
+
+                IShortLinkRepository repoService;
+                if (localOrBlob == "blob") { repoService = ctx.GetRequiredService<BlobStorageCsvRepository>(); }
+                else { repoService = ctx.GetRequiredService<LocalCsvShortLinkRepository>(); }
+
+                var logger = ctx.GetRequiredService<Serilog.ILogger>();
+
+                return new CachedShortLinkRepository(logger, repoService);
+            });
+            builderServices.Configure<RedirectOptions>(builderConfiguration);
+            builderServices.Configure<GoogleAnalyticsOptions>(builderConfiguration);
+            builderServices.Configure<SiteOptions>(builderConfiguration);
         }
 
         /// <summary>
