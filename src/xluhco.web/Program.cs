@@ -24,7 +24,7 @@ namespace xluhco.web
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Host.UseSerilog((context, services, configuration) =>
+            builder.Host.UseSerilog((_, _, configuration) =>
             {
                 configuration.MinimumLevel.Information()
                     .WriteTo.Console()
